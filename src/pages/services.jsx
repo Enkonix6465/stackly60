@@ -1,408 +1,910 @@
-import React from "react";
-// import servicehero from "../assets/servicehero.mp4";
-import { Link } from "react-router-dom";
-import dealsImg from "../assets/whychoose.jpg";
-import ImpactSection from "../components/ImpactSection"; // adjust path
-
-
-// Service images
-import img1 from "../assets/residential.jpg";
-import img2 from "../assets/commercial.jpg";
-import img3 from "../assets/industrial.jpg";
-import img4 from "../assets/heritage.jpg";
-import img5 from "../assets/architectural.jpg";
-import img6 from "../assets/ethical.mp4";
-import project from "../assets/project.jpg";
-
-
-
-
- const categories = [
-    {
-      title: "Breakfast Specials",
-      desc: "Start your day with fresh, wholesome, and energy-packed meals.",
-    },
-    {
-      title: "Lunch Combos",
-      desc: "Balanced meals with the perfect mix of taste and nutrition.",
-    },
-    {
-      title: "Dinner Feasts",
-      desc: "Indulge in hearty dishes made to bring families together.",
-    },
-    {
-      title: "Desserts & Drinks",
-      desc: "Sweet treats and refreshing beverages to complete your meal.",
-    },
-  ];
-
-const services = [
-  {
-    title: "Architectural Design",
-    desc: "Innovative and sustainable architectural designs tailored to meet client needs. Our team of experienced architects creates functional and aesthetically pleasing spaces, ensuring every project is unique and impactful. From residential homes to commercial buildings, we bring your vision to life with precision and creativity.",
-    img: img1,
-    path: "/Architectural-Design",
-  },
-  {
-    title: "Project Management",
-    desc: "Comprehensive project management services to ensure timely and efficient completion of construction projects. We handle planning, coordination, and execution, keeping quality and budget in focus. Our expertise guarantees smooth workflows and successful outcomes for every project.",
-    img: project,
-    path: "/Project-Management",
-  },
-  {
-    title: "Construction Services",
-    desc: "High-quality construction services for residential, commercial, and industrial projects. Our skilled team uses advanced techniques and premium materials to deliver durable and reliable structures. From foundation to finishing, we ensure excellence at every stage of construction.",
-    img: img3,
-    path: "/Construction-Services",
-  },
-  {
-    title: "Renovation & Remodeling",
-    desc: "Transform your spaces with our renovation and remodeling services. We specialize in modernizing interiors, upgrading facilities, and enhancing functionality. Whether it’s a single room or an entire building, our team delivers results that exceed expectations.",
-    img: img4,
-    path: "/Renovation-Remodeling",
-  },
-  {
-    title: "Interior Design",
-    desc: "Creative interior design solutions to elevate the look and feel of your spaces. Our designers focus on blending style with functionality, creating environments that inspire and comfort. From furniture selection to lighting, we handle every detail with care.",
-    img: img5,
-    path: "/Interior-Design",
-  },
-  {
-    title: "Sustainable Building Solutions",
-  desc: "Eco-friendly building solutions that prioritize sustainability and energy efficiency. We incorporate green practices and materials to reduce environmental impact while maintaining high standards of quality and performance. Build for the future with our sustainable services.",
-    img: img6,
-    path: "/Sustainable-Building-Solutions",
-  },
-];
-
-
-
-const ServicesPage = ({ lang = 'en' }) => {
-  const content = {
-    en: {
-      heroTitle: 'Elevate Your Event With ',
-      heroHighlight: 'Event Excellence',
-      heroDesc: 'Discover our full suite of event management services—delivering creativity, precision, and memorable experiences for every occasion. From conferences to galas, we turn your vision into reality with expert planning, seamless execution, and a passion for excellence.',
-      servicesTitle: 'Our Event Services',
-      residential: {
-        title: 'Corporate Events',
-        desc: 'We specialize in organizing impactful corporate events, from conferences and seminars to product launches and team-building retreats. Our team ensures every detail is managed with professionalism, creativity, and a focus on your business goals.',
-        link: 'Learn More',
-      },
-      commercial: {
-        title: 'Social Celebrations',
-        desc: 'From weddings and anniversaries to milestone birthdays and private parties, we create unforgettable social gatherings. Our creative team brings your vision to life, ensuring a personalized and stress-free experience for you and your guests.',
-        link: 'Learn More',
-      },
-      industrial: {
-        title: 'Conferences & Summits',
-        desc: 'We deliver seamless conference and summit management, handling logistics, speaker coordination, and attendee engagement. Our expertise ensures your event runs smoothly, leaving a lasting impression on all participants.',
-        link: 'Learn More',
-      },
-      renovation: {
-        title: 'Exhibitions & Trade Shows',
-        desc: 'Showcase your brand with our expert exhibition and trade show services. We manage booth design, logistics, and on-site support, helping you stand out and connect with your audience.',
-        link: 'Learn More',
-      },
-      architectural: {
-        title: 'Themed Events',
-        desc: 'Our themed event services bring creativity and flair to any occasion. Whether it’s a holiday party, cultural celebration, or custom concept, we design immersive experiences that delight guests and achieve your objectives.',
-        link: 'Learn More',
-      },
-      projectMgmt: {
-        title: 'Event Project Management',
-        desc: 'Our project management team oversees every aspect of your event, from planning and budgeting to execution and post-event analysis. We ensure clear communication, risk management, and flawless delivery every time.',
-        link: 'Learn More',
-      },
-      whyTitle: 'Why Choose Us?',
-      whyList: [
-        'Exclusive packages for large-scale conferences and celebrations.',
-        'Free initial consultation and event concept proposal for new clients.',
-        'Recent highlights: Global Tech Summit, City Gala, and Health Expo 2025.',
-        'Dedicated event manager for every project.',
-        'Fast-track planning and setup for urgent events.',
-        'Sustainable event solutions and eco-friendly practices.',
-        '24/7 support throughout your event journey.',
-      ],
-      howTitle: 'How to Plan Your Event',
-      howDesc: 'Ready to host an unforgettable event? Getting started with us is simple and transparent. We guide you through every step, ensuring your vision becomes reality with ease and confidence.',
-      howSteps: [
-        { title: 'Contact', desc: 'Contact Us: Reach out via our website, phone, or visit our office to discuss your event needs.' },
-        { title: 'Consult', desc: 'Consultation & Concept: Our experts will schedule a free consultation to understand your goals and propose creative ideas.' },
-        { title: 'Plan', desc: 'Event Proposal: Receive a detailed proposal including concepts, timelines, and transparent cost estimates.' },
-        { title: 'Design', desc: 'Agreement & Planning: Finalize the agreement and event plan, tailored to your objectives and budget.' },
-        { title: 'Execute', desc: 'Execution: Our skilled team manages logistics, vendor coordination, and on-site support until completion.' },
-        { title: 'Celebrate', desc: 'Event Day & Follow-Up: Enjoy your event while we handle every detail, plus post-event review and support.' },
-      ],
-      readyTitle: 'Ready to Plan Your Event?',
-      readyDesc: 'Have questions about planning a conference, celebration, or exhibition? Our experienced team is here to guide you through every step—from initial consultation to event day. Contact us for creative ideas, transparent estimates, and a seamless event experience. Let’s make your event extraordinary!',
-      getStarted: 'Get Started',
-    },
-    ar: {
-      heroTitle: 'نبني المستقبل مع ',
-      heroHighlight: 'التميز',
-      heroDesc: 'اكتشف خدماتنا الشاملة في البناء—نقدم الجودة والسلامة والابتكار في كل مشروع. من السكني إلى التجاري، نحقق رؤيتك من خلال التخطيط الدقيق والتنفيذ الماهر والالتزام بالتميز.',
-      servicesTitle: 'خدماتنا الإنشائية',
-      residential: {
-        title: 'مشاريع سكنية',
-        desc: 'نحن متخصصون في بناء المنازل والشقق والمجمعات السكنية الحديثة المصممة وفقًا لأسلوب حياتك. يضمن فريقنا تنفيذ كل مشروع بأعلى معايير الجودة والراحة والسلامة. من التخطيط الأولي إلى التسليم النهائي، نركز على التصميم المبتكر وكفاءة الطاقة والقيمة الدائمة لتحقيق منزل أحلامك.',
-        link: 'اعرف المزيد',
-      },
-      commercial: {
-        title: 'مشاريع تجارية',
-        desc: 'تشمل خدماتنا الإنشائية التجارية المباني المكتبية والمراكز التجارية والمتاجر والمزيد. نقدم مساحات عملية وجذابة بصريًا، مصممة لدعم نمو أعمالك. مع التركيز على المعايير الحديثة والسلامة والتسليم في الوقت المحدد، نساعدك على خلق بيئات تثير إعجاب العملاء وتعزز الإنتاجية.',
-        link: 'اعرف المزيد',
-      },
-      industrial: {
-        title: 'مشاريع صناعية',
-        desc: 'نتولى تطوير المصانع والمستودعات والمنشآت الصناعية بتصاميم هندسية قوية وتخطيطات فعالة. تضمن خبرتنا أن كل مشروع صناعي يفي بالمعايير التنظيمية ويحقق أقصى كفاءة تشغيلية ويصمد في البيئات الصعبة. نقدم حلولاً متكاملة من اختيار الموقع إلى التسليم.',
-        link: 'اعرف المزيد',
-      },
-      renovation: {
-        title: 'خدمات الترميم',
-        desc: 'تمنح خدمات الترميم لدينا حياة جديدة للمساحات القائمة، سواء كانت سكنية أو تجارية. نقدم إعادة تصميم احترافية، وترقيات هيكلية، وتجديدات داخلية لتعزيز الوظائف والراحة والجمال. من التحديثات البسيطة إلى التحولات الكاملة، نضمن عملية سلسة ونتائج رائعة تتجاوز التوقعات.',
-        link: 'اعرف المزيد',
-      },
-      architectural: {
-        title: 'تصاميم معمارية',
-        desc: 'يقدم فريق التصميم المعماري لدينا الإبداع والدقة والاستدامة في كل مشروع. نتعاون عن كثب مع العملاء لتطوير مفاهيم مبتكرة تعكس رؤيتك وتلبي الاحتياجات العملية. من الرسومات الأولية إلى المخططات التفصيلية، نضمن أن يكون كل تصميم عمليًا وجميلاً وصديقًا للبيئة.',
-        link: 'اعرف المزيد',
-      },
-      projectMgmt: {
-        title: 'إدارة المشاريع',
-        desc: 'نقدم خدمات إدارة مشاريع شاملة لضمان اكتمال مشروعك في الوقت المحدد وضمن الميزانية وبأعلى معايير الجودة. يشرف مديرونا ذوو الخبرة على كل مرحلة، من التخطيط والمشتريات إلى التنفيذ والتسليم، مع ضمان التواصل الواضح وإدارة المخاطر ورضا العملاء طوال العملية.',
-        link: 'اعرف المزيد',
-      },
-      whyTitle: 'لماذا نحن؟',
-      whyList: [
-        'خصومات خاصة على المشاريع السكنية والتجارية الكبيرة هذا الموسم.',
-        'استشارة موقع مجانية وتقدير المشروع للعملاء الجدد.',
-        'مشاريع بارزة جارية: شقق جرين فالي، أبراج تكنو بارك، ومول سيتي سنتر.',
-        'ضمان هيكلي لمدة 10 سنوات على جميع الإنشاءات الجديدة.',
-        'خيارات تسليم سريعة للمشاريع العاجلة.',
-        'مواد بناء صديقة للبيئة وممارسات بناء مستدامة.',
-        'دعم عملاء مخصص طوال رحلة مشروعك.',
-      ],
-      howTitle: 'كيف تبدأ مشروعك',
-      howDesc: 'جاهز للبناء أو الترميم أو التوسعة؟ البدء معنا بسيط وشفاف. نرشدك في كل خطوة لضمان تحقيق رؤيتك بسهولة وثقة.',
-      howSteps: [
-        { title: 'تواصل', desc: 'تواصل معنا: عبر الموقع أو الهاتف أو زيارتنا لمناقشة احتياجات مشروعك.' },
-        { title: 'استشارة', desc: 'استشارة وزيارة الموقع: سيحدد خبراؤنا موعدًا لاستشارة مجانية وتقييم الموقع لفهم متطلباتك.' },
-        { title: 'تخطيط', desc: 'اقتراح المشروع: استلم اقتراحًا مفصلاً يشمل التصاميم والجداول الزمنية والتكاليف الشفافة.' },
-        { title: 'تصميم', desc: 'الاتفاقية والتخطيط: أتمم الاتفاقية وخطة المشروع بما يتناسب مع أهدافك وميزانيتك.' },
-        { title: 'بناء', desc: 'التنفيذ: يدير فريقنا الماهر البناء وفحوصات الجودة والتحديثات المنتظمة حتى الاكتمال.' },
-        { title: 'تسليم', desc: 'التسليم والدعم: نسلم لك المشروع النهائي ونوفر الدعم المستمر لراحة بالك.' },
-      ],
-      readyTitle: 'جاهز لبدء مشروعك الإنشائي؟',
-      readyDesc: 'هل لديك أسئلة حول البناء أو الترميم أو التوسعة؟ فريقنا ذو الخبرة هنا لإرشادك في كل خطوة—من الاستشارة الأولية إلى إتمام المشروع. تواصل معنا للحصول على نصائح الخبراء وتقديرات شفافة وتجربة بناء سلسة. لنحقق رؤيتك معًا!',
-      getStarted: 'ابدأ الآن',
-    },
-    he: {
-      heroTitle: 'בונים את העתיד עם ',
-      heroHighlight: 'מצוינות',
-      heroDesc: 'גלה את שירותי הבנייה המקיפים שלנו—איכות, בטיחות וחדשנות בכל פרויקט. ממגורים ועד מסחר, נגשים את חזונך עם תכנון מקצועי, ביצוע מיומן ומחויבות למצוינות.',
-      servicesTitle: 'שירותי הבנייה שלנו',
-      residential: {
-        title: 'פרויקטים למגורים',
-        desc: 'אנו מתמחים בבניית בתים מודרניים, דירות ומתחמי מגורים המותאמים לאורח חייך. הצוות שלנו מבטיח שכל פרויקט ייבנה בסטנדרטים הגבוהים ביותר של איכות, נוחות ובטיחות. מהתכנון הראשוני ועד למסירה, אנו מתמקדים בעיצוב חדשני, יעילות אנרגטית וערך מתמשך—להגשים את בית חלומותיך.',
-        link: 'למידע נוסף',
-      },
-      commercial: {
-        title: 'פרויקטים מסחריים',
-        desc: 'שירותי הבנייה המסחריים שלנו כוללים משרדים, מרכזי קניות, חנויות ועוד. אנו מספקים חללים פונקציונליים, אסתטיים ובנויים לתמוך בצמיחת העסק שלך. עם דגש על סטנדרטים מודרניים, בטיחות ומסירה בזמן, ניצור עבורך סביבות שמרשימות לקוחות ומקדמות פרודוקטיביות.',
-        link: 'למידע נוסף',
-      },
-      industrial: {
-        title: 'פרויקטים תעשייתיים',
-        desc: 'אנו מטפלים בפיתוח מפעלים, מחסנים ומתקנים תעשייתיים עם הנדסה חזקה ותכנון יעיל. הניסיון שלנו מבטיח שכל פרויקט תעשייתי יעמוד בתקנים, ימקסם יעילות תפעולית וייבנה לעמידות. אנו מספקים פתרונות מקצה לקצה מבחירת האתר ועד למסירה.',
-        link: 'למידע נוסף',
-      },
-      renovation: {
-        title: 'שירותי שיפוץ',
-        desc: 'שירותי השיפוץ שלנו מעניקים חיים חדשים לחללים קיימים, למגורים או למסחר. אנו מציעים שיפוץ מקצועי, שדרוגים מבניים ועיצוב פנים לשיפור פונקציונליות, נוחות ומראה. משיפוצים קטנים ועד שדרוגים מלאים, נבטיח תהליך חלק ותוצאות מצוינות.',
-        link: 'למידע נוסף',
-      },
-      architectural: {
-        title: 'עיצובים אדריכליים',
-        desc: 'צוות העיצוב האדריכלי שלנו מביא יצירתיות, דיוק וקיימות לכל פרויקט. אנו משתפים פעולה עם הלקוחות לפיתוח רעיונות חדשניים שמשקפים את חזונך ועונים על צרכים מעשיים. מהשרטוטים הראשונים ועד לתוכניות המפורטות, כל עיצוב הוא פונקציונלי, יפה וידידותי לסביבה.',
-        link: 'למידע נוסף',
-      },
-      projectMgmt: {
-        title: 'ניהול פרויקטים',
-        desc: 'אנו מספקים שירותי ניהול פרויקטים מקיפים להבטחת השלמת הפרויקט שלך בזמן, בתקציב ובאיכות הגבוהה ביותר. המנהלים המנוסים שלנו מפקחים על כל שלב, מהתכנון והרכש ועד לביצוע ומסירה, עם תקשורת ברורה, ניהול סיכונים ושביעות רצון הלקוח.',
-        link: 'למידע נוסף',
-      },
-      whyTitle: 'למה לבחור בנו?',
-      whyList: [
-        'הנחות מיוחדות על פרויקטים גדולים למגורים ומסחר העונה.',
-        'ייעוץ ובדיקת אתר חינם ללקוחות חדשים.',
-        'פרויקטים בולטים: דירות גרין ואלי, מגדלי טקנו פארק, וקניון סיטי סנטר.',
-        'אחריות מבנית ל-10 שנים על כל הבנייה החדשה.',
-        'אפשרויות מסירה מהירה לפרויקטים דחופים.',
-        'חומרי בנייה ירוקים ושיטות בנייה בנות קיימא.',
-        'תמיכת לקוחות מסורה לאורך כל הדרך.',
-      ],
-      howTitle: 'איך להתחיל את הפרויקט שלך',
-      howDesc: 'מוכן לבנות, לשפץ או להתרחב? ההתחלה איתנו פשוטה ושקופה. נלווה אותך בכל שלב, להגשמת החזון שלך בקלות ובביטחון.',
-      howSteps: [
-        { title: 'צור קשר', desc: 'צור קשר: באתר, בטלפון או במשרדנו לשיחה על צרכי הפרויקט.' },
-        { title: 'ייעוץ', desc: 'ייעוץ וביקור באתר: המומחים שלנו יתאמו פגישה חינם והערכת אתר להבנת הצרכים שלך.' },
-        { title: 'תכנון', desc: 'הצעת פרויקט: קבל הצעה מפורטת הכוללת עיצובים, לוחות זמנים ועלויות שקופות.' },
-        { title: 'עיצוב', desc: 'הסכם ותכנון: השלם את ההסכם ותוכנית הפרויקט בהתאם למטרותיך ולתקציב.' },
-        { title: 'בנייה', desc: 'ביצוע: הצוות המיומן שלנו מנהל את הבנייה, בדיקות האיכות והעדכונים עד לסיום.' },
-        { title: 'מסירה', desc: 'מסירה ותמיכה: נסיים את הפרויקט ונספק תמיכה שוטפת לשקט הנפשי שלך.' },
-      ],
-      readyTitle: 'מוכן להתחיל את פרויקט הבנייה שלך?',
-      readyDesc: 'יש לך שאלות על בנייה, שיפוץ או הרחבה? הצוות המנוסה שלנו כאן ללוות אותך בכל שלב—מהייעוץ הראשוני ועד לסיום הפרויקט. פנה אלינו לייעוץ מקצועי, הצעות מחיר שקופות וחוויית בנייה חלקה. נבנה את החזון שלך יחד!',
-      getStarted: 'התחל עכשיו',
-    },
+// Construction CTA Section
+function ConstructionCTA() {
+  const { isRTL } = useLanguage();
+  const navigate = useNavigate();
+  const handleContact = () => {
+    navigate('/contact');
   };
-  const t = content[lang] || content.en;
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover"
-          src="https://videos.pexels.com/video-files/856192/856192-hd_1920_1080_24fps.mp4"
-          controls
-          preload="metadata"
+    <section className="w-full py-20 px-4 bg-[#8F00FF]" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className={`max-w-5xl mx-auto text-center`}>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-6 text-white`}>Ready to Shop the Best Deals?</h2>
+        <p className={`text-xl text-white/90 mb-8`}>Explore top categories, discover exclusive offers, and enjoy fast delivery on every order.</p>
+        <button
+          onClick={handleContact}
+          className={`bg-white text-[#8F00FF] font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-gray-100 transition-all duration-300 text-lg`}
         >
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white px-6">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            {t.heroTitle}<span className="text-[#ff0000]">{t.heroHighlight}</span>
-          </h1>
-          <p className="text-lg md:text-xl max-w-2xl">{t.heroDesc}</p>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="max-w-6xl mx-auto py-16 px-4 space-y-12">
-  <h2 className="text-3xl font-bold text-[#ff0000] mb-8 text-center">{t.servicesTitle}</h2>
-        {/* Service: Residential Projects */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={img1} alt={t.residential.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.residential.title}</h3>
-            <p className="text-gray-700 mb-2">{t.residential.desc}</p>
-            <Link to="/residential-projects" className="text-[#ff0000] hover:underline font-semibold">{t.residential.link}</Link>
-          </div>
-        </div>
-        {/* Service: Commercial Projects */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={img2} alt={t.commercial.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.commercial.title}</h3>
-            <p className="text-gray-700 mb-2">{t.commercial.desc}</p>
-            <Link to="/commercial-projects" className="text-[#ff0000] hover:underline font-semibold">{t.commercial.link}</Link>
-          </div>
-        </div>
-        {/* Service: Industrial Projects */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={img3} alt={t.industrial.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.industrial.title}</h3>
-            <p className="text-gray-700 mb-2">{t.industrial.desc}</p>
-            <Link to="/industrial-projects" className="text-[#ff0000] hover:underline font-semibold">{t.industrial.link}</Link>
-          </div>
-        </div>
-        {/* Service: Renovation Services */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={img4} alt={t.renovation.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.renovation.title}</h3>
-            <p className="text-gray-700 mb-2">{t.renovation.desc}</p>
-            <Link to="/renovation-services" className="text-[#ff0000] hover:underline font-semibold">{t.renovation.link}</Link>
-          </div>
-        </div>
-        {/* Service: Architectural Designs */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={img5} alt={t.architectural.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.architectural.title}</h3>
-            <p className="text-gray-700 mb-2">{t.architectural.desc}</p>
-            <Link to="/architectural-designs" className="text-[#ff0000] hover:underline font-semibold">{t.architectural.link}</Link>
-          </div>
-        </div>
-        {/* Service: Project Management */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <img src={project} alt={t.projectMgmt.title} className="w-full h-64 object-cover rounded-xl shadow-lg" />
-          <div>
-            <h3 className="text-2xl font-bold text-[#ff0000] mb-2">{t.projectMgmt.title}</h3>
-            <p className="text-gray-700 mb-2">{t.projectMgmt.desc}</p>
-            <Link to="/project-management" className="text-[#ff0000] hover:underline font-semibold">{t.projectMgmt.link}</Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-6xl mx-auto py-16 px-4">
-        <div className="grid md:grid-cols-2 gap-10 items-center">
-          {/* Left: Image */}
-          <div>
-            <img
-              src={dealsImg}
-              alt="Ongoing Deals"
-              className="w-full h-[400px] object-cover rounded-2xl shadow-lg"
-            />
-          </div>
-
-          {/* Right: Content */}
-          <div>
-            <h2 className="text-3xl font-bold text-[#ff0000] mb-4">{t.whyTitle}</h2>
-            <ul className="list-disc list-inside text-lg text-gray-700 space-y-3">
-              {t.whyList.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-  <section className="max-w-full bg-[#ff00001a] mx-auto py-16 px-4 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Info */}
-        <div>
-            <h2 className="text-3xl font-bold text-[#ff0000] mb-4">{t.howTitle}</h2>
-          <p className="text-lg text-gray-700 mb-4 leading-relaxed">{t.howDesc}</p>
-          <ol className="list-decimal list-inside text-lg text-gray-700 space-y-2">
-            {t.howSteps.map((step, idx) => (
-              <li key={idx}><span className="font-semibold text-[#ff0000]">{step.title}:</span> {step.desc}</li>
-            ))}
-          </ol>
-        </div>
-
-        {/* Right Visuals: 6 Step Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {t.howSteps.map((step, idx) => (
-            <div key={idx} className="bg-white border border-gray-200 shadow-md rounded-xl p-8 text-center">
-              <h3 className="text-2xl font-bold text-[#ff0000]">{step.title}</h3>
+          Start Shopping
+        </button>
+      </div>
+    </section>
+  );
+}
+function FeaturedProjects() {
+  // Removed unused images array
+  const featured = [
+    {
+      title: 'Wireless Earbuds',
+      desc: 'Crystal clear sound, long battery life, and fast shipping.',
+      img: fitnessImg
+    },
+    {
+      title: 'Smartwatch Pro',
+      desc: 'Track your health and stay connected on the go.',
+      img: lifeImg
+    },
+    {
+      title: 'Designer Backpack',
+      desc: 'Stylish, durable, and perfect for everyday use.',
+      img: renovationImg
+    },
+    {
+      title: 'Home Air Purifier',
+      desc: 'Breathe easy with advanced filtration and quiet operation.',
+      img: sleepImg
+    }
+  ];
+  return (
+    <section className="w-full py-16 px-4 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 text-[#8F00FF]">Featured Products & Deals</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {featured.map((item, idx) => (
+            <div key={item.title + idx} className="bg-violet-50 rounded-2xl shadow-md overflow-hidden flex flex-col items-center">
+              <img src={item.img} alt={item.title} className="w-full h-72 object-cover" />
+              <div className="flex flex-col items-center px-6 pt-4 pb-6">
+                <h3 className="text-lg font-bold text-[#8F00FF] mb-2 uppercase text-center">{item.title}</h3>
+                <p className="text-gray-700 text-base text-center">{item.desc}</p>
+                <span className="mt-2 text-lg font-semibold text-[#8F00FF]">Special Offer: Save 20%</span>
+              </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
+import { useState } from "react";
 
-      <section className="bg-white py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-[#ff0000] mb-4">{t.readyTitle}</h2>
-          <p className="text-lg text-gray-700 mb-6">{t.readyDesc}</p>
-          <Link
-            to="/contactus"
-            className="inline-block px-6 py-3 bg-[#ff0000] text-white font-semibold rounded-lg shadow-md hover:bg-[#cc0000] transition"
-          >
-            {t.getStarted}
-          </Link>
+function CostEstimator() {
+  const { translate, isRTL } = useLanguage();
+  const [projectType, setProjectType] = useState("Renovation");
+  const [area, setArea] = useState("");
+  const [material, setMaterial] = useState("Standard");
+  const [location, setLocation] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // Simple cost formula for demonstration
+  const getBaseRate = () => {
+    switch (projectType) {
+      case "Residential": return material === "Luxury" ? 1800 : material === "Premium" ? 1400 : 1000;
+      case "Commercial": return material === "Luxury" ? 2200 : material === "Premium" ? 1700 : 1300;
+      case "Industrial": return material === "Luxury" ? 2500 : material === "Premium" ? 2000 : 1500;
+      case "Renovation":
+      default: return material === "Luxury" ? 2000 : material === "Premium" ? 1500 : 1100;
+    }
+  };
+  const cost = area && !isNaN(area) ? (parseFloat(area) * getBaseRate()).toLocaleString() : "-";
+
+  return (
+  <section className="w-full py-16 px-4 bg-violet-50" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="max-w-4xl mx-auto md:px-12">
+  <h2 className={`text-3xl md:text-4xl font-bold mb-2 mt-2 ${isRTL ? 'text-right' : 'text-left'}`}>{translate('estimateProjectCost')}</h2>
+        <p className={`text-gray-700 mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>{translate('costEstimatorDescription')}</p>
+        <form className="space-y-4">
+          <select value={projectType} onChange={e => setProjectType(e.target.value)} className={`w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`}> 
+            <option value="Renovation">{translate('renovation')}</option>
+            <option value="Residential">{translate('residential')}</option>
+            <option value="Commercial">{translate('commercial')}</option>
+            <option value="Industrial">{translate('industrial')}</option>
+          </select>
+          <input type="number" min="0" placeholder={translate('areaSizePlaceholder')} value={area} onChange={e => setArea(e.target.value)} className={`w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`} />
+          <select value={material} onChange={e => setMaterial(e.target.value)} className={`w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`}> 
+            <option value="Standard">{translate('standard')}</option>
+            <option value="Premium">{translate('premium')}</option>
+            <option value="Luxury">{translate('luxury')}</option>
+          </select>
+          <input type="text" placeholder={translate('locationOptional')} value={location} onChange={e => setLocation(e.target.value)} className={`w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`} />
+          <div className={`flex flex-col md:flex-row gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+            <input type="text" placeholder={translate('yourName')} value={name} onChange={e => setName(e.target.value)} className={`flex-1 rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`} />
+            <input type="text" placeholder={translate('phoneNumber')} value={phone} onChange={e => setPhone(e.target.value)} className={`flex-1 rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-200 ${isRTL ? 'text-right' : 'text-left'}`} />
+          </div>
+          <div className={`flex flex-col md:flex-row items-center gap-4 mt-2 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+            <div className={`flex-1 text-lg font-semibold ${isRTL ? 'text-right' : 'text-left'}`} style={{ color: '#FF4D00', background: '#E6FFF2', borderRadius: '0.375rem', padding: '0.75rem 1rem' }}>
+              {translate('instantApproximateCost')}: <span className="font-bold">{cost !== "-" ? `₹${cost}` : "-"}</span>
+            </div>
+            <button type="button" className="bg-black text-white font-semibold px-8 py-4 rounded-md mt-2 md:mt-0 hover:bg-gray-900 transition-all shadow-md">{translate('getDetailedQuote')}</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+// Quality Services Section for Construction
+function QualityServices() {
+  const { isRTL } = useLanguage();
+  
+  // Ecommerce categories and services
+  const categories = [
+    {
+      title: 'Electronics',
+      desc: 'Latest gadgets, smartphones, and accessories at unbeatable prices.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3v4M8 3v4"/></svg>)
+    },
+    {
+      title: 'Fashion',
+      desc: 'Trendy clothing, shoes, and accessories for all ages.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2"/><circle cx="12" cy="7" r="4"/></svg>)
+    },
+    {
+      title: 'Home & Living',
+      desc: 'Furniture, decor, and essentials for a beautiful home.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>)
+    },
+    {
+      title: 'Beauty & Health',
+      desc: 'Skincare, wellness, and personal care products.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 3v4M8 3v4"/></svg>)
+    },
+    {
+      title: 'Sports & Outdoors',
+      desc: 'Gear and equipment for every adventure.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M2 17h20M2 12h20M2 7h20"/></svg>)
+    },
+    {
+      title: 'Toys & Kids',
+      desc: 'Fun and educational toys for all ages.',
+      icon: (<svg className="w-8 h-8 text-[#8F00FF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>)
+    },
+  ];
+  return (
+    <section className="w-full py-16 px-4 bg-white" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="max-w-7xl mx-auto">
+        <h2 className={`text-3xl md:text-4xl font-bold mb-10 text-[#8F00FF] ${isRTL ? 'text-right' : 'text-left'}`}>Shop by Category</h2>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ${isRTL ? 'rtl' : 'ltr'}`}> 
+          {categories.map((cat) => (
+            <div key={cat.title} className={`bg-violet-50 rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-6`}>
+              {cat.icon}
+              <h3 className="text-lg font-bold text-[#8F00FF] mb-2">{cat.title}</h3>
+              <p className="text-gray-700 text-base text-center">{cat.desc}</p>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../Header";
+import Footer from "../footer";
+import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { useLanguage } from "../contexts/LanguageContext";
+import servicesVideo from "../assets/services.mp4";
+import renovationImg from "../assets/renovation.jpg";
+import sleepImg from "../assets/renovation.jpg";
+import roadImg from "../assets/road.jpg";
+import lifeImg from "../assets/interior.jpg";
+import fitnessImg from "../assets/residentialtower.jpg";
+import nutritionImg from "../assets/industrial.jpg";
+import yogaImg from "../assets/road.jpg";
+import wellnessTipsImg from "../assets/cta.jpg";
+
+import safetyImg from "../assets/cta.jpg";
+// Safety Standards Followed Section
+function SafetyStandardsFollowed() {
+  const ecommerceStandards = [
+    {
+      title: 'Certified Sellers',
+      desc: 'All products are sold by verified, trusted sellers.'
+    },
+    {
+      title: 'Quality Assurance',
+      desc: 'Every item is checked for quality before shipping.'
+    },
+    {
+      title: 'Fast Delivery',
+      desc: 'Enjoy quick shipping and real-time tracking on every order.'
+    },
+    {
+      title: 'Easy Returns',
+      desc: 'Hassle-free returns and exchanges for your peace of mind.'
+    }
+  ];
+  return (
+    <section className="w-full py-16 px-4 bg-violet-50">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-stretch">
+        <div className="flex-1 flex flex-col gap-6 justify-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[#8F00FF]">Our Ecommerce Guarantees</h2>
+          {ecommerceStandards.map((item, idx) => (
+            <div key={idx} className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-2 border-l-4 border-[#8F00FF]">
+              <h3 className="text-xl font-semibold text-[#8F00FF]">{item.title}</h3>
+              <p className="text-gray-700 text-base">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+          <img src={safetyImg} alt="Ecommerce Guarantees" className="w-full h-full max-h-[500px] rounded-2xl shadow-2xl object-cover" style={{aspectRatio:'1.2', objectFit:'cover'}} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServicesHero() {
+  const { elementRef } = useScrollAnimation(0.1, 0);
+  const navigate = useNavigate();
 
 
+  const navigateToContact = () => {
+    navigate('/contact');
+  };
+
+  return (
+    <section ref={elementRef} className="w-full h-screen flex items-center px-4 relative overflow-hidden justify-center">
+      {/* Background Video */}
+      <video 
+        autoPlay 
+        muted 
+        loop 
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={servicesVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="max-w-7xl w-full relative z-10 text-center">
+        <h1 className="text-6xl md:text-7xl font-extrabold text-white mb-8 drop-shadow">Shop Top Categories & Deals</h1>
+        <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto">Discover electronics, fashion, home essentials, and more. Enjoy exclusive offers and fast delivery with Shoply!</p>
+        <button onClick={navigateToContact} className="bg-[#8F00FF] hover:bg-[#6c00b8] text-white font-bold py-4 px-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 text-lg">
+          Start Shopping
+        </button>
+      </div>
+    </section>
+  );
+}
+
+ 
+
+function SymptomGoalChecker({ isDarkMode }) {
+  const navigate = useNavigate();
+  const [selectedSymptoms, setSelectedSymptoms] = React.useState([]);
+  const [showResults, setShowResults] = React.useState(false);
+  const { elementRef } = useScrollAnimation(0.3, 200);
+
+  const clientSymptoms = [
+    {
+      id: "insomnia",
+      title: "Insomnia",
+      description: "Difficulty falling or staying asleep"
+    },
+    {
+      id: "stress",
+      title: "Chronic Stress",
+      description: "Constant worry and anxiety"
+    },
+    {
+      id: "fatigue",
+      title: "Low Energy",
+      description: "Feeling tired and unmotivated"
+    },
+    {
+      id: "weight_gain",
+      title: "Weight Issues",
+      description: "Struggling with weight management"
+    },
+    {
+      id: "back_pain",
+      title: "Back Pain",
+      description: "Chronic back and neck pain"
+    },
+    {
+      id: "digestive",
+      title: "Digestive Issues",
+      description: "Bloating, indigestion, gut problems"
+    },
+    {
+      id: "mood_swings",
+      title: "Mood Swings",
+      description: "Irregular mood and emotional instability"
+    },
+    {
+      id: "headaches",
+      title: "Frequent Headaches",
+      description: "Regular tension or migraine headaches"
+    }
+  ];
+
+  const serviceRecommendations = {
+    insomnia: [
+      {
+        title: "Industrial Construction",
+        description: "Advanced industrial construction services for factories, warehouses, and manufacturing facilities",
+        image: sleepImg,
+        servicePage: "industrial"
+      },
+      {
+        title: "Yoga & Meditation",
+        description: "Mind-body wellness through yoga classes and meditation sessions for stress relief and inner peace",
+        image: yogaImg,
+        servicePage: "yoga-meditation"
+      }
+    ],
+    stress: [
+      {
+        title: "Renovation & Remodeling",
+        description: "Transform your space with expert renovation and remodeling solutions for homes and businesses",
+        image: renovationImg,
+        servicePage: "renovation"
+      },
+      {
+        title: "Yoga & Meditation",
+        description: "Transform your mind and body through comprehensive yoga and meditation programs",
+        image: yogaImg,
+        servicePage: "yoga-meditation"
+      }
+    ],
+    fatigue: [
+      {
+        title: "Interior Design & Finishing",
+        description: "Transform your space with expert interior design and premium finishing solutions",
+        image: fitnessImg,
+        servicePage: "interior-design"
+      },
+      {
+        title: "Nutrition Guidance",
+        description: "Expert nutrition advice and meal planning to fuel your body and mind",
+        image: nutritionImg,
+        servicePage: "nutrition-guidance"
+      }
+    ],
+    weight_gain: [
+      {
+        title: "Personal Training",
+        description: "One-on-one fitness coaching tailored to your weight loss goals and fitness level",
+        image: fitnessImg,
+        servicePage: "personal-training"
+      },
+      {
+        title: "Nutrition Guidance",
+        description: "Master the art of healthy eating with comprehensive nutrition programs",
+        image: nutritionImg,
+        servicePage: "nutrition-guidance"
+      }
+    ],
+    back_pain: [
+      {
+        title: "Yoga & Meditation",
+        description: "Improve flexibility and reduce pain through yoga classes and meditation sessions",
+        image: yogaImg,
+        servicePage: "yoga-meditation"
+      },
+      {
+        title: "Personal Training",
+        description: "Expert trainers provide techniques to strengthen core and improve posture",
+        image: fitnessImg,
+        servicePage: "personal-training"
+      }
+    ],
+    digestive: [
+      {
+        title: "Nutrition Guidance",
+        description: "Expert nutrition advice and meal planning to support digestive health",
+        image: nutritionImg,
+        servicePage: "nutrition-guidance"
+      },
+      {
+        title: "Road & Infrastructure Construction",
+        description: "Professional road and infrastructure construction services for durable and safe transportation networks",
+        image: roadImg,
+        servicePage: "road"
+      }
+    ],
+    mood_swings: [
+      {
+        title: "Renovation & Remodeling",
+        description: "Complete renovation solutions to transform and modernize your living or working space",
+        image: renovationImg,
+        servicePage: "renovation"
+      },
+      {
+        title: "Road & Infrastructure Construction",
+        description: "Complete infrastructure solutions including highways, bridges, and urban development projects",
+        image: roadImg,
+        servicePage: "road"
+      }
+    ],
+    headaches: [
+      {
+        title: "Yoga & Meditation",
+        description: "Mind-body wellness through yoga classes and meditation sessions for stress relief",
+        image: yogaImg,
+        servicePage: "yoga-meditation"
+      },
+      {
+        title: "Industrial Construction",
+        description: "Robust industrial construction solutions for heavy industry and manufacturing operations",
+        image: sleepImg,
+        servicePage: "industrial"
+      }
+    ]
+  };
+
+  const handleSymptomToggle = (symptomId) => {
+    setSelectedSymptoms(prev => 
+      prev.includes(symptomId) 
+        ? prev.filter(id => id !== symptomId)
+        : [...prev, symptomId]
+    );
+  };
+
+  const handleFindServices = () => {
+    if (selectedSymptoms.length > 0) {
+      // Scroll to top when showing results
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+      setShowResults(true);
+    }
+  };
+
+  const getRecommendedServices = () => {
+    const allServices = [];
+    const seenServices = new Set();
+    
+    selectedSymptoms.forEach(symptomId => {
+      if (serviceRecommendations[symptomId]) {
+        serviceRecommendations[symptomId].forEach(service => {
+          // Use service title as unique identifier to avoid duplicates
+          if (!seenServices.has(service.title)) {
+            seenServices.add(service.title);
+            allServices.push(service);
+          }
+        });
+      }
+    });
+    return allServices;
+  };
+
+  const handleServiceClick = (servicePage) => {
+    try {
+      // Scroll to top before navigation
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+      
+      // Navigate to the specific service page based on servicePage value
+      switch (servicePage) {
+        case 'residential':
+          navigate('/residential');
+          break;
+        case 'commercial':
+          navigate('/commercial');
+          break;
+        case 'rennovation':
+          navigate('/rennovation');
+          break;
+        case 'interior-design':
+          navigate('/interior-design');
+          break;
+        case 'industrial':
+          navigate('/industrial');
+          break;
+        case 'road':
+          navigate('/road');
+          break;
+        default:
+          console.warn(`Unknown service page: ${servicePage}`);
+          break;
+      }
+    } catch (error) {
+      console.error('Error navigating to service page:', error);
+    }
+  };
+
+  return (
+    <section ref={elementRef} className="w-full py-20 px-4 bg-[#FF4D00]">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            What are your current symptoms?
+          </h2>
+          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+            Tell us about your symptoms and we'll guide you to the most suitable wellness services.
+          </p>
+        </div>
+
+        {!showResults ? (
+          <>
+                         <div className="max-w-6xl mx-auto mb-12">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                 {/* Left Column - First 4 symptoms */}
+                 <div className="space-y-4">
+                   {clientSymptoms.slice(0, 4).map((symptom) => (
+                     <label
+                       key={symptom.id}
+                       className={`flex items-center p-4 rounded-lg border-2 transition-all duration-300 cursor-pointer ${
+                         selectedSymptoms.includes(symptom.id)
+                           ? `border-[#FF4D00] shadow-lg ${isDarkMode ? 'bg-black' : 'bg-white'}`
+                           : `${isDarkMode ? 'border-gray-600 bg-black hover:border-[#FF4D00]' : 'border-gray-200 bg-white hover:border-[#FF4D00]'} hover:shadow-md`
+                       }`}
+                     >
+                       <input
+                         type="checkbox"
+                         checked={selectedSymptoms.includes(symptom.id)}
+                         onChange={() => handleSymptomToggle(symptom.id)}
+                         className="w-5 h-5 text-[#FF4D00] border-gray-300 rounded focus:ring-[#FF4D00] focus:ring-2 mr-4"
+                       />
+                       <div className="flex-1">
+                         <div className={`font-semibold text-lg ${
+                           selectedSymptoms.includes(symptom.id) ? 'text-[#FF4D00]' : (isDarkMode ? 'text-white' : 'text-gray-900')
+                         }`}>
+                           {symptom.title}
+                         </div>
+                         <div className={`text-sm mt-1 ${
+                           selectedSymptoms.includes(symptom.id) ? 'text-[#FF4D00]/80' : (isDarkMode ? 'text-gray-300' : 'text-gray-600')
+                         }`}>
+                           {symptom.description}
+                         </div>
+                       </div>
+                     </label>
+                   ))}
+                 </div>
+                 
+                 {/* Right Column - Last 4 symptoms */}
+                 <div className="space-y-4">
+                   {clientSymptoms.slice(4, 8).map((symptom) => (
+                     <label
+                       key={symptom.id}
+                       className={`flex items-center p-4 rounded-lg border-2 transition-all duration-300 cursor-pointer ${
+                         selectedSymptoms.includes(symptom.id)
+                           ? `border-[#FF4D00] shadow-lg ${isDarkMode ? 'bg-black' : 'bg-white'}`
+                           : `${isDarkMode ? 'border-gray-600 bg-black hover:border-[#FF4D00]' : 'border-gray-200 bg-white hover:border-[#FF4D00]'} hover:shadow-md`
+                       }`}
+                     >
+                       <input
+                         type="checkbox"
+                         checked={selectedSymptoms.includes(symptom.id)}
+                         onChange={() => handleSymptomToggle(symptom.id)}
+                         className="w-5 h-5 text-[#FF4D00] border-gray-300 rounded focus:ring-[#FF4D00] focus:ring-2 mr-4"
+                       />
+                       <div className="flex-1">
+                         <div className={`font-semibold text-lg ${
+                           selectedSymptoms.includes(symptom.id) ? 'text-[#FF4D00]' : (isDarkMode ? 'text-white' : 'text-gray-900')
+                         }`}>
+                           {symptom.title}
+                         </div>
+                         <div className={`text-sm mt-1 ${
+                           selectedSymptoms.includes(symptom.id) ? 'text-[#FF4D00]/80' : (isDarkMode ? 'text-gray-300' : 'text-gray-600')
+                         }`}>
+                           {symptom.description}
+                         </div>
+                       </div>
+                     </label>
+                   ))}
+                 </div>
+               </div>
+             </div>
+
+                         <div className="text-center">
+                                <button
+                   onClick={handleFindServices}
+                   disabled={selectedSymptoms.length === 0}
+                   className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                     selectedSymptoms.length > 0
+                       ? 'bg-[#FF4D00] text-white hover:bg-[#e6440a] shadow-lg hover:shadow-xl transform hover:-translate-y-1'
+                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                   }`}
+                 >
+                   Find Services for My Symptoms
+                 </button>
+             </div>
+          </>
+        ) : (
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h3 className={`text-2xl font-bold mb-4 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                Recommended Services for Your Symptoms
+              </h3>
+              <p className={`mb-6 ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-600'
+              }`}>
+                Based on your symptoms, these services are specifically designed to help you find relief and improve your health.
+              </p>
+              <button
+                onClick={() => {
+                  // Scroll to top
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                  });
+                  setShowResults(false);
+                  setSelectedSymptoms([]);
+                }}
+                className="bg-white text-[#FF4D00] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                ← Back to Symptoms
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {getRecommendedServices().map((service, index) => (
+                <div key={`${service.title}-${index}`} className={`p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border ${
+                  isDarkMode ? 'bg-black border-gray-700' : 'bg-white border-gray-100'
+                }`}>
+                  <div className="w-16 h-16 rounded-lg overflow-hidden mb-4">
+                    <img 
+                      src={service.image} 
+                      alt={service.title || 'Service'}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        console.warn(`Failed to load image for service: ${service.title}`);
+                      }}
+                    />
+                  </div>
+                  <h4 className={`text-lg font-bold mb-3 ${
+                    isDarkMode ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    {service.title || 'Service'}
+                  </h4>
+                  <p className={`text-sm leading-relaxed mb-4 ${
+                    isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    {service.description || 'No description available'}
+                  </p>
+                  <button 
+                    onClick={() => handleServiceClick(service.servicePage)}
+                    className="bg-[#FF4D00] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#e6440a] transition-colors duration-300"
+                  >
+                    View Service Details
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function WhatYouCanAchieve({ isDarkMode }) {
+  const goals = [
+    {
+      title: "Improved Flexibility",
+      description: "Enhance your range of motion and joint mobility through our specialized yoga and stretching programs designed for all fitness levels.",
+      color: "bg-[#FF4D00]",
+      number: "01"
+    },
+    {
+      title: "Reduced Anxiety",
+      description: "Lower stress levels and improve mental clarity with our mindfulness practices, meditation sessions, and stress management techniques.",
+      color: "bg-[#FF4D00]",
+      number: "02"
+    },
+    {
+      title: "Better Posture",
+      description: "Strengthen your core and achieve proper spine alignment through our posture correction programs and specialized training sessions.",
+      color: "bg-[#FF4D00]",
+      number: "03"
+    },
+    {
+      title: "Inner Calm",
+      description: "Achieve deep sense of peace and emotional balance through our holistic wellness practices and expert-guided meditation programs.",
+      color: "bg-[#FF4D00]",
+      number: "04"
+    }
+  ];
+
+  return (
+    <section className={`w-full py-20 px-4 transition-colors duration-300 ${
+      isDarkMode ? 'bg-black' : 'bg-white'
+    }`}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>
+            What You Can Achieve
+          </h2>
+          <p className={`text-xl max-w-3xl mx-auto ${
+            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+          }`}>
+            Discover realistic, inspiring outcomes from using our wellness services. 
+            Transform your life with proven results and sustainable improvements.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 text-justify md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {goals.map((goal, index) => (
+            <div 
+              key={index} 
+              className={`rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden ${
+                isDarkMode ? 'bg-black' : 'bg-white'
+              }`}
+            >
+              {/* Colored Tab */}
+              <div className={`${goal.color} text-white p-4 rounded-tl-xl`}>
+                <div className="text-3xl font-bold">{goal.number}</div>
+              </div>
+              
+              {/* Card Content */}
+              <div className="p-6">
+                {/* Title and Description */}
+                <div>
+                  <h3 className={`text-lg font-bold mb-3 ${goal.color.replace('bg-', 'text-')}`}>
+                    {goal.title}
+                  </h3>
+                  <p className={`text-sm leading-relaxed ${
+                    isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    {goal.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+
+      </div>
+    </section>
+  );
+}
+
+function HealthWellnessTips({ isDarkMode }) {
+  const tips = [
+    {
+      title: "Stay Hydrated",
+      description: "Drink at least 8 glasses of water daily to maintain optimal body function and energy levels."
+    },
+    {
+      title: "Get Quality Sleep",
+      description: "Aim for 7-9 hours of sleep per night to support recovery and mental clarity."
+    },
+    {
+      title: "Move Daily",
+      description: "Incorporate at least 30 minutes of physical activity into your daily routine."
+    },
+    {
+      title: "Practice Mindfulness",
+      description: "Take 10-15 minutes daily for meditation or deep breathing exercises."
+    },
+    {
+      title: "Eat Balanced Meals",
+      description: "Focus on whole foods, lean proteins, and plenty of fruits and vegetables."
+    }
+  ];
+
+  return (
+    <section className="w-full py-20 px-4 bg-[#FF4D00]">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+          {/* Left Side - Image */}
+          <div className="order-2 lg:order-1 flex items-center">
+            <img 
+              src={wellnessTipsImg} 
+              alt="Health and Wellness" 
+              className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
+            />
+          </div>
+          
+          {/* Right Side - Tips */}
+          <div className="order-1 lg:order-2 flex flex-col justify-center">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+              isDarkMode ? 'text-black' : 'text-white'
+            }`}>
+              Health & Wellness Tips
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Simple, effective strategies to enhance your daily wellness routine and improve your overall health.
+            </p>
+            
+            <div className="space-y-6">
+              {tips.map((tip, index) => (
+                <div key={index} className="border-l-4 border-white pl-6 py-2">
+                  <h3 className={`text-lg font-semibold mb-2 ${
+                    isDarkMode ? 'text-black' : 'text-white'
+                  }`}>
+                    {tip.title}
+                  </h3>
+                  <p className="text-white/80 leading-relaxed">
+                    {tip.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTASection({ isDarkMode }) {
+  const navigate = useNavigate();
+
+  const navigateToContact = () => {
+    navigate('/contact');
+  };
+
+  // Removed unused scrollToServices function
+
+  return (
+    <section className={`w-full py-20 px-4 transition-colors duration-300 ${
+      isDarkMode ? 'bg-black' : 'bg-white'
+    }`}>
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
+          isDarkMode ? 'text-white' : 'text-[#FF4D00]'
+        }`}>
+          Ready to Transform Your Life?
+        </h2>
+        <p className={`text-xl max-w-3xl mx-auto mb-8 ${
+          isDarkMode ? 'text-gray-300' : 'text-gray-600'
+        }`}>
+          Join thousands of people who have already improved their health and wellness with our expert guidance and proven programs.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button 
+            onClick={navigateToContact}
+            className="bg-[#FF4D00] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#e6440a] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            Get Started Today
+          </button>
+          {/* Removed Learn More button that referenced undefined scrollToServices */}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Services() {
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const { isRTL } = useLanguage();
+
+  // Scroll to top when component mounts
+  useScrollToTop();
+
+  // Dark mode functionality
+  React.useEffect(() => {
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(darkMode);
+  }, []);
+
+  React.useEffect(() => {
+    const handleDarkModeChange = (event) => {
+      setIsDarkMode(event.detail);
+    };
+    
+    window.addEventListener('darkModeChanged', handleDarkModeChange);
+    
+    return () => {
+      window.removeEventListener('darkModeChanged', handleDarkModeChange);
+    };
+  }, []);
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      <Header />
+      <ServicesHero />
+      <QualityServices />
+      <CostEstimator />
+      <FeaturedProjects />
+      <SafetyStandardsFollowed />
+  <ConstructionCTA />
+  <Footer />
     </div>
   );
-};
-
-export default ServicesPage;
+} 

@@ -1,77 +1,59 @@
+import RoadConstruction from "./pages/servicespages/road";
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import Home from "./pages/home1";
+import Home2 from "./pages/home2";
+import Welcome from "./welcome";
+import AdminDashboard from "./admin-dashboard";
+import About from "./pages/aboutus";
+import Services from "./pages/services";
+import Blog from "./pages/blog";
+import Article from "./pages/article";
+import ContactUs from "./pages/contactus";
+import Residential from "./pages/servicespages/Residential";
+import Commercial from "./pages/servicespages/commercial";
+import RenovationRemodeling from "./pages/servicespages/rennovation";
+import InteriorDesignFinishing from "./pages/servicespages/InteriorDesign";
+import Industrial from "./pages/servicespages/industrial";
 
-// Restored from App.original.jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import React, { useState, useEffect } from 'react';
-import Footer from './components/Footer';
-import Home1 from './pages/Home1';
-import Home2Hero from './pages/Home2';
-import AboutHero from './pages/aboutus';
-import WelcomePage from './pages/welcome';
-import AIHero from './pages/ResidentialProjects';
-import RenovationServices from './pages/RenovationServices';  
-import ProjectManagement from './pages/ProjectManagement';
-import ResidentialProjects from './pages/ResidentialProjects';
-import IndustrialProjects from './pages/IndustrialProjects';
-import CommercialProjects from './pages/CommercialProjects';
-import BlogHero from './pages/blog';
-import BlogDetail from './pages/BlogDetail';
-import ContactHero from './pages/contactus';
-import AdminDashboard from './pages/admindashboard';
-import UserDashboard from './pages/userdashboard';
-import ServicesHero from './pages/services';
-import ScrollToTop from './pages/scroll-top';
-import ArchitecturalDesigns from './pages/Architectural Designs';
 
 function App() {
-  const [lang, setLang] = useState('en');
-  useEffect(() => {
-    if (lang === 'ar' || lang === 'he') {
-      document.documentElement.dir = 'rtl';
-    } else {
-      document.documentElement.dir = 'ltr';
-    }
-  }, [lang]);
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="App">
-        <Routes>
-          {/* Redirect root to /welcome */}
-          <Route path="/" element={<WelcomePage lang={lang} setLang={setLang} />} />
-          <Route path="/welcome" element={<WelcomePage lang={lang} setLang={setLang} />} />
-          {/* Admin Dashboard route without Header/Footer */}
-          <Route path="/admindashboard" element={<AdminDashboard />} />
-          {/* All other routes with Header/Footer */}
-          <Route
-            path="/*"
-            element={
-              <>
-                <Header lang={lang} setLang={setLang} />
-                <Routes>
-                  <Route path="home1" element={<Home1 lang={lang} />} />
-                  <Route path="home2" element={<Home2Hero lang={lang} />} />
-                  <Route path="aboutus" element={<AboutHero lang={lang} />} />
-                  <Route path="Residential-Projects" element={<ResidentialProjects lang={lang} />} />
-                  <Route path="Commercial-Projects" element={<CommercialProjects lang={lang} />} />
-                  <Route path="Industrial-Projects" element={<IndustrialProjects lang={lang} />} />
-                  <Route path="Renovation-Services" element={<RenovationServices lang={lang} />} />
-                  <Route path="Architectural-Designs" element={<ArchitecturalDesigns lang={lang} />} />
-                  <Route path="Project-Management" element={<ProjectManagement lang={lang} />} />
-                  <Route path="services" element={<ServicesHero lang={lang} />} />
-                  <Route path="blog" element={<BlogHero lang={lang} />} />
-                  <Route path="/blog/:id" element={<BlogDetail lang={lang} />} />
-                  <Route path="contactus" element={<ContactHero lang={lang} />} />
-                  <Route path="/userdashboard" element={<UserDashboard lang={lang} />} />
-                  {/* Add more routes as needed */}
-                </Routes>
-                <Footer lang={lang} />
-              </>
-            }
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <LanguageProvider>
+      <Routes>
+       <Route path="/yoga" element={<Navigate to="/residential" replace />} />
+       <Route path="/diet-nutrition" element={<Navigate to="/commercial" replace />} />
+       <Route path="/mental-wellness" element={<Navigate to="/renovation" replace />} />
+       <Route path="/fitness-programs" element={<Navigate to="/interior-design" replace />} />
+        <Route path="/sleep-therapy" element={<Navigate to="/industrial" replace />} />
+        <Route path="/lifestyle-coaching" element={<Navigate to="/road" replace />} />
+
+        <Route path="/" element={<Welcome />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/home1" element={<Home />} />
+        <Route path="/home2" element={<Home2 />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/aboutus" element={<About />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/article/:id" element={<Article />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/residential" element={<Residential />} />
+        <Route path="/yoga" element={<Residential />} />
+        <Route path="/diet-nutrition" element={<Residential />} />
+        <Route path="/mental-wellness" element={<Residential />} />
+        <Route path="/fitness-programs" element={<Residential />} />
+        <Route path="/sleep-therapy" element={<Industrial />} />
+        <Route path="/lifestyle-coaching" element={<RoadConstruction />} />
+        <Route path="/commercial" element={<Commercial />} />
+        <Route path="/renovation" element={<RenovationRemodeling />} />
+        <Route path="/interior-design" element={<InteriorDesignFinishing />} />
+        <Route path="/industrial" element={<Industrial />} />
+        <Route path="/road" element={<RoadConstruction />} />
+      </Routes>
+    </LanguageProvider>
   );
 }
 

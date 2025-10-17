@@ -2,67 +2,245 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Latin.woff2') format('woff2');
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF; /* Basic Latin */
+/* Remove body padding and handle header spacing in individual components */
+
+/* RTL Support Styles */
+[dir="rtl"] {
+  text-align: right;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+[dir="rtl"] .text-left {
+  text-align: right !important;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8fafc;
-  color: #1e293b;
+[dir="rtl"] .text-right {
+  text-align: left !important;
 }
 
-.gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+[dir="rtl"] .justify-start {
+  justify-content: flex-end !important;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+[dir="rtl"] .justify-end {
+  justify-content: flex-start !important;
 }
 
-.card-hover {
-  transition: all 0.3s ease;
+[dir="rtl"] .items-start {
+  align-items: flex-end !important;
 }
 
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+[dir="rtl"] .items-end {
+  align-items: flex-start !important;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  transition: all 0.3s ease;
+/* RTL margin and padding adjustments */
+[dir="rtl"] .ml-1 {
+  margin-left: 0 !important;
+  margin-right: 0.25rem !important;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+[dir="rtl"] .mr-1 {
+  margin-right: 0 !important;
+  margin-left: 0.25rem !important;
 }
 
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+[dir="rtl"] .ml-2 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
 }
 
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+[dir="rtl"] .mr-2 {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+[dir="rtl"] .ml-4 {
+  margin-left: 0 !important;
+  margin-right: 1rem !important;
+}
+
+[dir="rtl"] .mr-4 {
+  margin-right: 0 !important;
+  margin-left: 1rem !important;
+}
+
+/* RTL Flex direction and spacing fixes */
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+[dir="rtl"] .justify-start {
+  justify-content: flex-end !important;
+}
+
+[dir="rtl"] .justify-end {
+  justify-content: flex-start !important;
+}
+
+[dir="rtl"] .items-start {
+  align-items: flex-end !important;
+}
+
+[dir="rtl"] .items-end {
+  align-items: flex-start !important;
+}
+
+[dir="rtl"] .pl-4 {
+  padding-left: 0 !important;
+  padding-right: 1rem !important;
+}
+
+[dir="rtl"] .pr-4 {
+  padding-right: 0 !important;
+  padding-left: 1rem !important;
+}
+
+[dir="rtl"] .pl-6 {
+  padding-left: 0 !important;
+  padding-right: 1.5rem !important;
+}
+
+[dir="rtl"] .pr-6 {
+  padding-right: 0 !important;
+  padding-left: 1.5rem !important;
+}
+
+/* RTL specific flex direction adjustments */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse !important;
+}
+
+[dir="rtl"] .space-x-4 > * + * {
+  margin-left: 0 !important;
+  margin-right: 1rem !important;
+}
+
+[dir="rtl"] .space-x-6 > * + * {
+  margin-left: 0 !important;
+  margin-right: 1.5rem !important;
+}
+
+[dir="rtl"] .space-x-8 > * + * {
+  margin-left: 0 !important;
+  margin-right: 2rem !important;
+}
+
+/* RTL positioning */
+[dir="rtl"] .left-0 {
+  left: auto !important;
+  right: 0 !important;
+}
+
+[dir="rtl"] .right-0 {
+  right: auto !important;
+  left: 0 !important;
+}
+
+/* RTL border radius adjustments */
+.rounded-tr-\[3rem\] {
+  border-top-right-radius: 3rem;
+}
+
+.rounded-bl-\[3rem\] {
+  border-bottom-left-radius: 3rem;
+}
+
+.rounded-tl-\[3rem\] {
+  border-top-left-radius: 3rem;
+}
+
+.rounded-br-\[3rem\] {
+  border-bottom-right-radius: 3rem;
+}
+
+/* Specific RTL classes for better control */
+.rtl-text-right {
+  text-align: right;
+}
+
+.rtl-justify-end {
+  justify-content: flex-end;
+}
+
+/* Arabic and Hebrew font improvements */
+[dir="rtl"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Arial Unicode MS';
+}
+
+/* Ensure proper Arabic/Hebrew text rendering */
+[lang="ar"], [lang="he"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Arial Unicode MS';
+  line-height: 1.6;
+}
+
+/* RTL Hero section alignment */
+[dir="rtl"] .hero-content {
+  text-align: right !important;
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+/* RTL Button alignment */
+[dir="rtl"] .hero-button-container {
+  justify-content: flex-end !important;
+}
+
+/* RTL Section headers */
+[dir="rtl"] .section-header {
+  text-align: center !important;
+}
+
+/* RTL Features section */
+[dir="rtl"] .features-section {
+  text-align: right !important;
+}
+
+[dir="rtl"] .features-section .space-y-6 > * {
+  text-align: right !important;
+}
+
+[dir="rtl"] .features-section h2 {
+  text-align: right !important;
+}
+
+[dir="rtl"] .features-section p {
+  text-align: right !important;
+}
+
+/* RTL Cards in features section */
+[dir="rtl"] .feature-card {
+  text-align: right !important;
+}
+
+[dir="rtl"] .feature-card h3 {
+  text-align: right !important;
+}
+
+[dir="rtl"] .feature-card p {
+  text-align: right !important;
+}
+
+/* RTL Grid and Layout fixes */
+[dir="rtl"] .grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .grid > * {
+  text-align: right;
+}
+
+/* Ensure consistent card shapes */
+[dir="rtl"] .rounded-3xl {
+  border-radius: 1.5rem !important;
+}
+
+/* RTL Animation adjustments */
+@media (prefers-reduced-motion: no-preference) {
+  [dir="rtl"] [data-aos="fade-right"] {
+    transform: translateX(50px) !important;
+  }
+  
+  [dir="rtl"] [data-aos="fade-left"] {
+    transform: translateX(-50px) !important;
+  }
 }

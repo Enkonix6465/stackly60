@@ -1,386 +1,656 @@
-import React, { useState, useEffect } from "react";
-// import blogHero from "../assets/blog.mp4";
-import { Brain, Code, BarChart3 } from "lucide-react";
-import feature1 from "../assets/article1.jpg"; // re
-import feature2 from "../assets/article2.jpg"; // replace with your delivery-related image
-import feature3 from "../assets/article3.jpg"; // replace with your cuisine variety image
-import { Link } from "react-router-dom";
-const content = {
-  en: {
-    heroTitle: 'Event Management ',
-    heroHighlight: 'Insights',
-    heroDesc: 'Stay inspired with the latest trends, creative ideas, and best practices in event planning, conferences, celebrations, and experiential marketing. Make every event extraordinary with our expert tips and industry news!',
-    featuredTitle: 'Featured Event Articles',
-    categoriesTitle: 'Explore by Event Topics',
-    categoriesDesc1: 'Our blog is organized to help you easily find articles on event design, technology, project management, and guest experience—everything you need to host a successful event.',
-    categoriesDesc2: 'Browse through our categories and discover expert advice, case studies, and the latest industry updates. Whether you’re an event planner, business owner, or party host, our blog has something for you.',
-    categories: [
-      { name: "Event Design & Decor", desc: "Latest trends, tips, and inspiration for creative event themes and decor." },
-      { name: "Event Technology", desc: "Innovations and tools transforming the event industry." },
-      { name: "Event Project Management", desc: "Best practices for planning, scheduling, and delivering flawless events." },
-      { name: "Guest Experience", desc: "Guides and updates on guest engagement, safety, and satisfaction." },
-    ],
-    features: [
-      { title: "Sustainable Event Solutions", description: "Explore the latest eco-friendly practices that make your events memorable and responsible.", image: feature1, link: "/blog/1" },
-      { title: "Smart Event Technology", description: "Discover how apps, AR, and live streaming are revolutionizing event engagement and logistics.", image: feature2, link: "/blog/2" },
-      { title: "Modern Event Project Management", description: "Learn about agile methods, digital tools, and best practices for delivering events on time and within budget.", image: feature3, link: "/blog/3" },
-    ],
-    servicesTitle: 'Service Comparison',
-    services: [
-      { name: "Venue Selection", features: ["Curated venue options", "Site visits", "Contract negotiation", "Logistics planning"] },
-      { name: "Event Planning", features: ["Concept development", "Timeline creation", "Budget management", "Vendor coordination"] },
-      { name: "Design & Decor", features: ["Theme design", "Decor setup", "Lighting & AV", "Custom installations"] },
-      { name: "Guest Management", features: ["Invitations & RSVPs", "On-site registration", "Guest support", "Feedback collection"] },
-      { name: "Live Event Support", features: ["Day-of coordination", "Troubleshooting", "Stage management", "Real-time updates"] },
-      { name: "Post-Event Services", features: ["Cleanup & breakdown", "Thank-you follow-ups", "Survey analysis", "Photo/video delivery"] },
-    ],
-    mythsTitle: 'Event Myths & Facts',
-    myths: [
-      { myth: "Event planning is always stressful.", fact: "With the right team and tools, planning can be smooth and enjoyable." },
-      { myth: "Bigger budgets guarantee better events.", fact: "Creativity and thoughtful planning matter more than budget size." },
-      { myth: "Virtual events are less engaging.", fact: "Modern tech and creative formats can make virtual events highly interactive." },
-      { myth: "You need a huge team to run a great event.", fact: "A small, skilled team can deliver outstanding results with the right strategy." },
-      { myth: "Sustainable events are too expensive.", fact: "Eco-friendly practices can save money and add value for guests and sponsors." },
-      { myth: "Only professionals can host memorable events.", fact: "Anyone can create a great event with the right guidance and inspiration." },
-    ],
-    tipsTitle: 'Event Planning Tips �',
-    constructionTips: [
-      { tip: "Start planning early to secure the best venues and vendors." },
-      { tip: "Create a detailed timeline and checklist for every event." },
-      { tip: "Use technology for invitations, RSVPs, and guest engagement." },
-      { tip: "Personalize the experience for your guests whenever possible." },
-      { tip: "Have a backup plan for outdoor or complex events." },
-      { tip: "Communicate clearly with your team and partners." },
-      { tip: "Capture memories with professional photography and video." },
-      { tip: "Follow up with guests after the event for feedback and appreciation." },
-    ],
-    readMore: 'Read More →',
-  },
-  ar: {
-    heroTitle: 'مدونة ',
-    heroHighlight: 'البناء',
-    heroDesc: 'ابقَ على اطلاع بأحدث الاتجاهات والابتكارات وأفضل الممارسات في البناء والهندسة المعمارية وإدارة المشاريع. ابنِ بذكاء مع نصائحنا وخبراتنا!',
-    featuredTitle: 'مقالات البناء المميزة',
-    categoriesTitle: 'استكشف حسب مواضيع البناء',
-    categoriesDesc1: 'مدونتنا منظمة لمساعدتك في العثور بسهولة على مقالات حول الهندسة المعمارية والتكنولوجيا وإدارة المشاريع والسلامة—كل ما تحتاجه للنجاح في البناء.',
-    categoriesDesc2: 'تصفح الفئات واكتشف نصائح الخبراء ودراسات الحالة وآخر التحديثات. سواء كنت بنّاءً أو مهندسًا أو مالك مشروع، ستجد ما يفيدك.',
-    categories: [
-      { name: "الهندسة المعمارية والتصميم", desc: "أحدث الاتجاهات والنصائح والإلهام لتصميم المباني الحديثة." },
-      { name: "تكنولوجيا البناء", desc: "الابتكارات والأدوات التي تغير صناعة البناء." },
-      { name: "إدارة المشاريع", desc: "أفضل الممارسات للتخطيط والجدولة وتسليم المشاريع في الوقت المحدد." },
-      { name: "السلامة والامتثال", desc: "أدلة وتحديثات حول السلامة في الموقع واللوائح والمعايير." },
-    ],
-    features: [
-      { title: "مواد بناء مستدامة", description: "اكتشف أحدث المواد الصديقة للبيئة التي تعزز المتانة وتقلل الأثر البيئي.", image: feature1, link: "/blog/1" },
-      { title: "تكنولوجيا البناء الذكية", description: "تعرف على كيف تغير الطائرات بدون طيار وBIM وإنترنت الأشياء إدارة المواقع والسلامة والكفاءة.", image: feature2, link: "/blog/2" },
-      { title: "إدارة المشاريع الحديثة", description: "تعلم عن الأساليب الرقمية وأفضل الممارسات لتسليم المشاريع في الوقت المحدد وضمن الميزانية.", image: feature3, link: "/blog/3" },
-    ],
-    servicesTitle: 'مقارنة الخدمات',
-    services: [
-      { name: "إشراف الموقع", features: ["تفتيشات يومية", "فحوصات الجودة", "مراقبة الامتثال للسلامة", "توثيق التقدم"] },
-      { name: "تخطيط المشروع", features: ["جدولة مفصلة", "تخصيص الموارد", "تقدير الميزانية", "تقييم المخاطر"] },
-      { name: "التصميم والهندسة", features: ["رسومات معمارية", "تحليل إنشائي", "تنسيق MEP", "حلول مستدامة"] },
-      { name: "المشتريات", features: ["إدارة الموردين", "توفير المواد", "تفاوض التكاليف", "تسليم في الوقت المناسب"] },
-      { name: "تقارير العملاء", features: ["تحديثات أسبوعية", "تواصل شفاف", "تتبع المشكلات", "توثيق بالصور"] },
-      { name: "ما بعد البناء", features: ["فحوصات نهائية", "وثائق التسليم", "دعم الضمان", "تخطيط الصيانة"] },
-    ],
-    mythsTitle: 'خرافات وحقائق البناء',
-    myths: [
-      { myth: "المباني الخضراء دائمًا أغلى تكلفة.", fact: "التصميم المستدام يقلل التكاليف على المدى الطويل والمواد الصديقة للبيئة أصبحت منافسة بالسعر." },
-      { myth: "تأخيرات المشاريع أمر لا مفر منه.", fact: "مع التخطيط الجيد وإدارة المخاطر والتواصل، يمكن تجنب معظم التأخيرات أو تقليلها." },
-      { myth: "المباني الجاهزة منخفضة الجودة.", fact: "البناء الحديث يستخدم مواد عالية الجودة ومعايير صارمة غالبًا تتفوق على التقليدي." },
-      { myth: "معدات السلامة فقط للأعمال عالية الخطورة.", fact: "معدات الحماية ضرورية لجميع أنشطة البناء لمنع الإصابات وحماية الأرواح." },
-      { myth: "التكنولوجيا تبطئ العمل.", fact: "الأدوات الرقمية والأتمتة تسرع العمليات وتحسن الدقة والتعاون." },
-      { myth: "إدارة المشاريع فقط للشركات الكبيرة.", fact: "إدارة المشاريع تفيد جميع الأحجام وقابلة للتخصيص لأي ميزانية." },
-    ],
-    tipsTitle: 'نصائح البناء 🏗️',
-    constructionTips: [
-      { tip: "تحقق دائمًا من ظروف الموقع وجودة التربة قبل بدء الأساسات." },
-      { tip: "استخدم معدات الحماية الشخصية دائمًا في الموقع." },
-      { tip: "نظم اجتماعات سلامة منتظمة لفريقك." },
-      { tip: "راجع القياسات مرتين قبل القص أو الصب لتجنب الأخطاء المكلفة." },
-      { tip: "احتفظ بالمستندات والخطط في متناول جميع أعضاء الفريق." },
-      { tip: "استثمر في أدوات عالية الجودة واعتنِ بها بانتظام." },
-      { tip: "تابع توقعات الطقس لتخطيط الأنشطة الحرجة." },
-      { tip: "وثق التقدم بالصور والسجلات اليومية." },
-    ],
-    readMore: 'اقرأ المزيد →',
-  },
-  he: {
-    heroTitle: 'בלוג ',
-    heroHighlight: 'הבנייה',
-    heroDesc: 'הישאר מעודכן בטרנדים, חידושים ושיטות עבודה מובילות בבנייה, אדריכלות, הנדסה וניהול פרויקטים. בנה חכם עם הטיפים והחדשות שלנו!',
-    featuredTitle: 'מאמרי בנייה נבחרים',
-    categoriesTitle: 'חקור לפי נושאי בנייה',
-    categoriesDesc1: 'הבלוג שלנו מאורגן כדי לעזור לך למצוא בקלות מאמרים על אדריכלות, טכנולוגיה, ניהול פרויקטים ובטיחות—כל מה שצריך להצלחה בבנייה.',
-    categoriesDesc2: 'עיין בקטגוריות וגלה עצות מומחים, מקרי בוחן ועדכונים אחרונים. בין אם אתה בונה, אדריכל, מהנדס או בעל פרויקט, תמצא כאן ערך.',
-    categories: [
-      { name: "אדריכלות ועיצוב", desc: "טרנדים, טיפים והשראה לעיצוב מבנים מודרניים." },
-      { name: "טכנולוגיית בנייה", desc: "חדשנות וכלים שמשנים את ענף הבנייה." },
-      { name: "ניהול פרויקטים", desc: "שיטות מובילות לתכנון, תזמון והשלמת פרויקטים בזמן." },
-      { name: "בטיחות וציות", desc: "מדריכים ועדכונים על בטיחות, תקנות וסטנדרטים." },
-    ],
-    features: [
-      { title: "חומרי בנייה ברי קיימא", description: "גלה חומרים ידידותיים לסביבה שמחזקים עמידות ומפחיתים השפעה סביבתית.", image: feature1, link: "/blog/1" },
-      { title: "טכנולוגיית בנייה חכמה", description: "גלה כיצד רחפנים, BIM ואינטרנט הדברים משנים את ניהול האתר, הבטיחות והיעילות.", image: feature2, link: "/blog/2" },
-      { title: "ניהול פרויקטים מודרני", description: "למד על שיטות אג'ייל, כלים דיגיטליים ושיטות עבודה להשלמת פרויקטים בזמן ובתקציב.", image: feature3, link: "/blog/3" },
-    ],
-    servicesTitle: 'השוואת שירותים',
-    services: [
-      { name: "פיקוח אתר", features: ["בדיקות יומיות", "בדיקות איכות", "מעקב אחר בטיחות", "תיעוד התקדמות"] },
-      { name: "תכנון פרויקט", features: ["תזמון מפורט", "הקצאת משאבים", "הערכת תקציב", "הערכת סיכונים"] },
-      { name: "תכנון והנדסה", features: ["שרטוטים אדריכליים", "ניתוח מבני", "תיאום מערכות", "פתרונות ברי קיימא"] },
-      { name: "רכש", features: ["ניהול ספקים", "רכש חומרים", "משא ומתן על עלויות", "אספקה בזמן"] },
-      { name: "דיווח ללקוח", features: ["עדכונים שבועיים", "תקשורת שקופה", "מעקב בעיות", "תיעוד בצילום"] },
-      { name: "לאחר הבנייה", features: ["בדיקות סופיות", "מסמכי מסירה", "תמיכה באחריות", "תכנון תחזוקה"] },
-    ],
-    mythsTitle: 'מיתוסים ועובדות בבנייה',
-    myths: [
-      { myth: "מבנים ירוקים תמיד יקרים יותר.", fact: "עיצוב בר קיימא מפחית עלויות לטווח ארוך וחומרים ירוקים תחרותיים במחיר." },
-      { myth: "עיכובים בפרויקטים הם בלתי נמנעים.", fact: "עם תכנון נכון, ניהול סיכונים ותקשורת, רוב העיכובים ניתנים למניעה או לצמצום." },
-      { myth: "מבנים טרומיים הם באיכות נמוכה.", fact: "בנייה מודרנית משתמשת בחומרים איכותיים וסטנדרטים מחמירים, לעיתים עולים על המסורתי." },
-      { myth: "ציוד מגן דרוש רק לעבודות מסוכנות.", fact: "ציוד מגן אישי חיוני לכל פעילות בנייה למניעת פציעות והצלת חיים." },
-      { myth: "טכנולוגיה מאטה את העבודה.", fact: "כלים דיגיטליים ואוטומציה מאיצים תהליכים, משפרים דיוק ומשפרים שיתוף פעולה." },
-      { myth: "רק חברות גדולות יכולות להרשות לעצמן ניהול פרויקטים.", fact: "ניהול פרויקטים מועיל לכל גודל פרויקט וניתן להתאמה לכל תקציב." },
-    ],
-    tipsTitle: 'טיפים לבנייה 🏗️',
-    constructionTips: [
-      { tip: "בדוק תמיד את תנאי האתר ואיכות הקרקע לפני תחילת יסודות." },
-      { tip: "השתמש בציוד מגן אישי תמיד באתר." },
-      { tip: "ארגן תדריכי בטיחות קבועים לצוות שלך." },
-      { tip: "בדוק מידות פעמיים לפני חיתוך או יציקה כדי למנוע טעויות יקרות." },
-      { tip: "שמור מסמכים ותוכניות זמינים לכל חברי הצוות." },
-      { tip: "השקע בכלים איכותיים ותחזק אותם באופן קבוע." },
-      { tip: "בדוק תחזיות מזג אוויר לתכנון פעילויות קריטיות." },
-      { tip: "תעד התקדמות בתמונות ודוחות יומיים." },
-    ],
-    readMore: 'קרא עוד →',
-  },
-};
 
-export default function BlogHero({ lang = 'en' }) {
-  const t = content[lang] || content.en;
-  const [theme, setTheme] = useState('light');
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../Header';
+import Footer from '../footer';
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useLanguage } from '../contexts/LanguageContext';
+import morningWellness from '../assets/road1.jpg';
+import mindfulMeditation from '../assets/homecta.jpg';
+import nutrition from '../assets/road.jpg';
+import blogVideo from '../assets/blogVideo.mp4';
+import quizImage from '../assets/quiz.jpg';
+
+function Blog() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
+  const { translate, isRTL } = useLanguage();
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+  const [currentMythFact, setCurrentMythFact] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('safety');
+  const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
+
+  // Scroll to top when component mounts
+  useScrollToTop();
+
+  // Dark mode functionality
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(storedTheme);
-      const handleThemeChange = () => {
-        const newTheme = localStorage.getItem('theme') || 'light';
-        setTheme(newTheme);
-      };
-      window.addEventListener('theme-changed', handleThemeChange);
-      window.addEventListener('storage', handleThemeChange);
-      return () => {
-        window.removeEventListener('theme-changed', handleThemeChange);
-        window.removeEventListener('storage', handleThemeChange);
-      };
-    }
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(savedDarkMode);
   }, []);
 
+  useEffect(() => {
+    const handleDarkModeChange = (event) => {
+      setIsDarkMode(event.detail);
+    };
+
+    window.addEventListener('darkModeChanged', handleDarkModeChange);
+    return () => window.removeEventListener('darkModeChanged', handleDarkModeChange);
+  }, []);
+
+  const categoryContent = {
+    shoppingTips: {
+      title: "Smart Shopping Tips",
+      description: "Learn how to save money, find the best deals, and shop safely online.",
+      benefits: [
+        "Save more on every purchase",
+        "Discover hidden deals",
+        "Shop securely",
+        "Get the most value"
+      ],
+      tips: "Always compare prices and check reviews before buying.",
+      articles: "20+ articles on online shopping tips and tricks"
+    },
+    productReviews: {
+      title: "Product Reviews",
+      description: "Read expert and user reviews on the latest electronics, fashion, and home products.",
+      benefits: [
+        "Make informed decisions",
+        "Find top-rated products",
+        "Avoid buyer's remorse",
+        "See real user feedback"
+      ],
+      tips: "Look for verified purchase reviews for honest opinions.",
+      articles: "15+ reviews on trending products"
+    },
+    deals: {
+      title: "Best Deals & Offers",
+      description: "Stay updated on flash sales, exclusive discounts, and limited-time offers.",
+      benefits: [
+        "Save big on top brands",
+        "Access exclusive coupons",
+        "Limited-time offers",
+        "Early access to sales"
+      ],
+      tips: "Sign up for our newsletter to never miss a deal!",
+      articles: "18+ articles on deals and discounts"
+    },
+    customerStories: {
+      title: "Customer Stories",
+      description: "Read real stories from Shoply customers about their favorite purchases and shopping experiences.",
+      benefits: [
+        "Trusted reviews",
+        "Shopping inspiration",
+        "Community insights",
+        "Tips from real buyers"
+      ],
+      tips: "Share your own story for a chance to be featured!",
+      articles: "10+ customer stories and testimonials"
+    },
+    shoppingTech: {
+      title: "Shopping Technology",
+      description: "Explore the latest tech trends in ecommerce, from mobile apps to AI-powered recommendations.",
+      benefits: [
+        "Personalized shopping",
+        "Faster checkout",
+        "Better deals",
+        "Innovative features"
+      ],
+      tips: "Try our app for the best experience!",
+      articles: "12+ articles on ecommerce technology"
+    }
+  };
+  // Ecommerce Quiz Questions
+  const quizQuestions = [
+    {
+      question: "Which is the safest way to pay online?",
+      options: ["Bank transfer", "Cash on delivery", "Credit card with 3D Secure", "Gift card"],
+      correct: 2
+    },
+    {
+      question: "What should you check before buying from a new website?",
+      options: ["Return policy", "Contact info", "Customer reviews", "All of the above"],
+      correct: 3
+    },
+    {
+      question: "How can you find the best deals?",
+      options: ["Compare prices", "Use coupons", "Sign up for newsletters", "All of the above"],
+      correct: 3
+    },
+    {
+      question: "What is a verified purchase review?",
+      options: ["Review by a seller", "Review by a buyer who purchased the item", "Review by a guest", "Review by a competitor"],
+      correct: 1
+    },
+    {
+      question: "Which is NOT a benefit of shopping online?",
+      options: ["Convenience", "Limited selection", "Exclusive deals", "Home delivery"],
+      correct: 1
+    }
+  ];
+
+  const handleAnswerSelect = (answerIndex) => {
+    setSelectedAnswers({
+      ...selectedAnswers,
+      [currentQuestion]: answerIndex
+    });
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < quizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setShowResults(true);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  const getAnswerColor = (questionIndex, optionIndex) => {
+    if (selectedAnswers[questionIndex] === undefined) return '';
+    
+    if (optionIndex === quizQuestions[questionIndex].correct) {
+      return 'bg-[#FF4D00] text-white';
+    } else if (selectedAnswers[questionIndex] === optionIndex) {
+      return 'bg-red-500 text-white';
+    }
+    return '';
+  };
+
+  const calculateScore = () => {
+    let correct = 0;
+    Object.keys(selectedAnswers).forEach(questionIndex => {
+      if (selectedAnswers[questionIndex] === quizQuestions[questionIndex].correct) {
+        correct++;
+      }
+    });
+    return correct;
+  };
+
+  // Ecommerce Myths and Facts
+  const mythsAndFacts = [
+    {
+      myth: [
+        "Online shopping is always risky.",
+        "You can't return products bought online.",
+        "All deals online are scams.",
+        "You can't trust product reviews."
+      ],
+      fact: [
+        "Shoply uses secure payment and buyer protection.",
+        "Most online stores offer easy returns.",
+        "Shoply verifies deals and sellers for safety.",
+        "Verified purchase reviews are trustworthy."
+      ]
+    },
+    {
+      myth: [
+        "Online stores never have customer support.",
+        "Shipping always takes weeks.",
+        "You can't find exclusive products online.",
+        "Online shopping is only for tech-savvy people."
+      ],
+      fact: [
+        "Shoply offers 24/7 customer support.",
+        "Shoply delivers most orders in days.",
+        "Shoply features exclusive brands and products.",
+        "Shoply is easy for everyone to use."
+      ]
+    }
+  ];
+
+  const handleMythFactNext = () => {
+    if (currentMythFact < mythsAndFacts.length - 1) {
+      setCurrentMythFact(currentMythFact + 1);
+    }
+  };
+
+  const handleGoToFirst = () => {
+    setCurrentMythFact(0);
+  };
+
+  const handleMythFactPrevious = () => {
+    if (currentMythFact > 0) {
+      setCurrentMythFact(currentMythFact - 1);
+    }
+  };
+
   return (
-    <div className={theme === 'dark' ? 'min-h-screen bg-black text-white' : 'min-h-screen bg-white text-black'}>
-      {/* Hero Section */}
-      <section className="relative w-full h-screen flex items-center justify-center" style={{ color: theme === 'dark' ? '#fff' : '#222' }}>
+  <div className={`min-h-screen ${isDarkMode ? 'bg-black' : 'bg-white'} ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+      <Header />
+      {/* Section 1 - Hero Section (Ecommerce) */}
+      <section className={`w-full h-screen relative overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-violet-50'}`}>
         {/* Background Video */}
-        <video
+        <video 
+          autoPlay 
+          muted 
+          loop 
           className="absolute inset-0 w-full h-full object-cover"
-          src="https://videos.pexels.com/video-files/854190/854190-hd_1920_1080_25fps.mp4" // Pexels direct .mp4: Creative/Architecture
-          autoPlay
-          muted
-          loop
-        />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50"></div>
-
-        {/* Content */}
-        <div className="relative text-center px-6" style={{ color: theme === 'dark' ? '#fff' : '#fff' }}>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            {t.heroTitle}
-            <span style={{ color: '#ff0000' }}>{t.heroHighlight}</span>
+        >
+          <source src={blogVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Content Overlay */}
+        <div className={`relative z-10 h-full flex flex-col ${isRTL ? 'items-end text-right' : 'items-start text-left'} justify-center px-4 sm:px-6 md:px-8 lg:px-16`}>
+          <h1 className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-1000 ease-out animate-fade-in-up ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}> 
+            Shoply Ecommerce Blog
           </h1>
-          <p className={`text-lg md:text-xl max-w-2xl mx-auto ${theme === 'dark' ? 'text-white' : 'text-white'}`}>
-            {t.heroDesc}
+          <p className={`text-xl md:text-2xl max-w-3xl transition-all duration-1000 ease-out delay-300 animate-fade-in-up-delay-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}> 
+            Discover shopping tips, product reviews, exclusive deals, and customer stories to help you shop smarter and save more.
           </p>
         </div>
       </section>
 
-      {/* Latest Blogs Section */}
-      
-
-      {/* Featured Articles Section */}
-  <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#ff00001a]'}`}>
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Heading */}
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-	  {t.featuredTitle}
+      {/* Section 2 - Featured Articles (Ecommerce) */}
+      <section className={`w-full py-16 px-4 ${isDarkMode ? 'bg-black' : 'bg-white'}`}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className={`text-3xl font-bold text-center mb-12 transition-all duration-1000 ease-out animate-fade-in-up ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}> 
+            Featured Ecommerce Articles
           </h2>
-
-          {/* Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
-            {t.features.map((feature, index) => (
-              <article
-                key={index}
-                className={`rounded-2xl shadow hover:shadow-lg transition duration-300 overflow-hidden ${theme === 'dark' ? 'bg-[#222] text-white' : 'bg-gray-50 text-black'}`}
-              >
-                {/* Image */}
-                <img
-                  src={feature.image}
-                  alt={feature.title}
-                  className="w-full h-48 object-cover"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Featured Article Card 1 */}
+            <div className={`rounded-xl shadow-lg overflow-hidden ${isDarkMode ? 'bg-gray-800' : 'bg-white'} hover:shadow-xl transition-shadow duration-300`}>
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={morningWellness} 
+                  alt="Smart Shopping Tips" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                 />
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className={`text-xl font-semibold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {feature.title}
-                  </h3>
-                  <p className={`text-sm leading-relaxed mb-4 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>
-                    {feature.description}
-                  </p>
-                 <Link
-  to={feature.link}
-  className="text-[#ff0000] font-semibold hover:underline"
->
-  {t.readMore}
-</Link>
-
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Categories Section */}
-      <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
-        <div className="max-w-7xl mx-auto px-6 grid  md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Explore by <span style={{ color: '#ff0000' }}>Event Topics</span>
-            </h2>
-            <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
-  Our blog is organized to help you easily find articles on event design, technology, project management, and guest experience—everything you need to host a successful event.
-</p>
-<p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
-  Browse through our categories and discover expert advice, case studies, and the latest industry updates. Whether you’re an event planner, business owner, or party host, our blog has something for you.
-</p>
-
-          </div>
-
-          {/* Right Cards Grid */}
-          <div className="grid  sm:grid-cols-2 gap-6">
-            {t.categories.map((cat, index) => (
-              <div
-                key={index}
-                className={`p-6 rounded-2xl shadow-md hover:shadow-lg transition ${theme === 'dark' ? 'bg-[#222] text-white' : 'bg-white text-black'}`}
-              >
-                <div className="text-3xl mb-4">{cat.icon}</div>
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#ff0000' }}>{cat.name}</h3>
-                <p className={theme === 'dark' ? 'text-gray-200' : 'text-gray-600'}>{cat.desc}</p>
               </div>
-            ))}
+              <div className="p-6">
+                <h3 className={`text-xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}> 
+                  Smart Shopping Tips
+                </h3>
+                <p className={`text-sm mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}> 
+                  Learn how to save money, find the best deals, and shop safely online.
+                </p>
+                <div className={`flex items-center mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center ${isRTL ? 'ml-3' : 'mr-3'}`}>
+                    <span className="text-[#8F00FF] text-sm font-bold">S</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Shoply Team</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>2 days ago • 5 min read</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => navigate('/article/shopping-tips')}
+                  className="text-[#8F00FF] font-semibold hover:text-violet-700 transition-colors"
+                >
+                  Read More {isRTL ? '←' : '→'}
+                </button>
+              </div>
+            </div>
+
+            {/* Featured Article Card 2 - Product Reviews */}
+            <div className={`rounded-xl shadow-lg overflow-hidden ${isDarkMode ? 'bg-gray-800' : 'bg-white'} hover:shadow-xl transition-shadow duration-300`}>
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={mindfulMeditation} 
+                  alt="Product Reviews" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className={`text-xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}> 
+                  Product Reviews
+                </h3>
+                <p className={`text-sm mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}> 
+                  Read expert and user reviews on the latest electronics, fashion, and home products.
+                </p>
+                <div className={`flex items-center mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center ${isRTL ? 'ml-3' : 'mr-3'}`}>
+                    <span className="text-[#8F00FF] text-sm font-bold">P</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Shoply Team</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>1 day ago • 8 min read</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => navigate('/article/product-reviews')}
+                  className="text-[#8F00FF] font-semibold hover:text-violet-700 transition-colors"
+                >
+                  Read More {isRTL ? '←' : '→'}
+                </button>
+              </div>
+            </div>
+
+            {/* Featured Article Card 3 - Best Deals & Offers */}
+            <div className={`rounded-xl shadow-lg overflow-hidden ${isDarkMode ? 'bg-gray-800' : 'bg-white'} hover:shadow-xl transition-shadow duration-300`}>
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={nutrition} 
+                  alt="Best Deals & Offers" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className={`text-xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}> 
+                  Best Deals & Offers
+                </h3>
+                <p className={`text-sm mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}> 
+                  Stay updated on flash sales, exclusive discounts, and limited-time offers.
+                </p>
+                <div className={`flex items-center mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center ${isRTL ? 'ml-3' : 'mr-3'}`}>
+                    <span className="text-[#8F00FF] text-sm font-bold">D</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Shoply Team</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>3 days ago • 6 min read</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => navigate('/article/deals-offers')}
+                  className="text-[#8F00FF] font-semibold hover:text-violet-700 transition-colors"
+                >
+                  Read More {isRTL ? '←' : '→'}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-
-
-
-  <section className={`py-16 ${theme === 'dark' ? 'bg-[#222]' : 'bg-[#ff00001a]'}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-              {t.servicesTitle}
+      {/* Section 3 - Ecommerce Category Comparison */}
+      <section className={`w-full py-16 px-4 ${isDarkMode ? 'bg-violet-100' : 'bg-violet-50'}`}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className={`text-3xl font-bold text-center mb-12 ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`} style={{textAlign: 'center'}}> 
+            Compare Ecommerce Categories
+          </h2>
+          <p className={`text-lg text-center mb-12 max-w-3xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}> 
+            Find the best category for your shopping needs: tips, reviews, deals, and more.
+          </p>
+          <div className="overflow-x-auto">
+            <div className={`rounded-xl shadow-lg overflow-hidden ${isDarkMode ? 'bg-black' : 'bg-white'}`}> 
+              <div className="min-w-full">
+                {/* Table Header */}
+                <div className={`grid grid-cols-5 gap-4 p-6 border-b-2 ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-violet-50 border-violet-200'}`}>
+                  <div className={`font-bold text-lg text-center ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>Category</div>
+                  <div className={`font-bold text-lg text-center ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>Description</div>
+                  <div className={`font-bold text-lg text-center ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>Best For</div>
+                  <div className={`font-bold text-lg text-center ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>Key Features</div>
+                  <div className={`font-bold text-lg text-center ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>Shoply Insights</div>
+                </div> {/* close Table Header */}
+                {/* Table Rows */}
+                <div className="divide-y divide-gray-200">
+                  {/* Shopping Tips Row */}
+                  <div className={`grid grid-cols-5 gap-4 p-6 hover:bg-violet-50 transition-colors ${isDarkMode ? 'hover:bg-gray-700' : ''}`}>
+                    <div className="flex items-center">
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Shopping Tips</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Save money, shop smart</span>
+                    </div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Deal hunters, smart shoppers</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Tips, guides, articles</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>20+ articles</div>
+                  </div>
+                  {/* Product Reviews Row */}
+                  <div className={`grid grid-cols-5 gap-4 p-6 hover:bg-violet-50 transition-colors ${isDarkMode ? 'hover:bg-gray-700' : ''}`}>
+                    <div className="flex items-center">
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Product Reviews</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Expert & user reviews</span>
+                    </div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Informed buyers</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Ratings, feedback, comparisons</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>15+ reviews</div>
+                  </div>
+                  {/* Deals Row */}
+                  <div className={`grid grid-cols-5 gap-4 p-6 hover:bg-violet-50 transition-colors ${isDarkMode ? 'hover:bg-gray-700' : ''}`}>
+                    <div className="flex items-center">
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Deals & Offers</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Discounts, coupons, sales</span>
+                    </div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Bargain seekers</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Flash sales, exclusive deals</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>18+ articles</div>
+                  </div>
+                  {/* Customer Stories Row */}
+                  <div className={`grid grid-cols-5 gap-4 p-6 hover:bg-violet-50 transition-colors ${isDarkMode ? 'hover:bg-gray-700' : ''}`}>
+                    <div className="flex items-center">
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Customer Stories</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Real experiences</span>
+                    </div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Community, inspiration</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Testimonials, tips</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>10+ stories</div>
+                  </div>
+                  {/* Shopping Tech Row */}
+                  <div className={`grid grid-cols-5 gap-4 p-6 hover:bg-violet-50 transition-colors ${isDarkMode ? 'hover:bg-gray-700' : ''}`}>
+                    <div className="flex items-center">
+                      <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Shopping Tech</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Latest ecommerce tech</span>
+                    </div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Tech lovers</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>Apps, AI, features</div>
+                    <div className={`${isDarkMode ? 'text-gray-300' : 'text-black'}`}>12+ articles</div>
+                  </div>
+                </div> {/* close Table Rows */}
+              </div> {/* close min-w-full */}
+            </div> {/* close rounded-xl shadow-lg */}
+          </div> {/* close overflow-x-auto */}
+        </div> {/* close max-w-7xl */}
+      </section>
+        
+  {/* Section 5 - Myths vs Facts - Ecommerce Two Column Layout */}
+  <section className={`w-full text-justify py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}> 
+          {/* Section Header */}
+          <div className="text-center mb-16 px-4 max-w-7xl mx-auto">
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>
+              Ecommerce Myths vs Facts
             </h2>
+            <p className={`text-xl max-w-3xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Get the truth about online shopping, deals, and customer safety.
+            </p>
+          </div>
 
-        {/* Responsive Table */}
-        <div className="overflow-x-auto">
-          <table className={`w-full border rounded-lg shadow-md text-left ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
-            <thead className={theme === 'dark' ? 'bg-[#111] text-white' : 'bg-[#ff0000] text-white'}>
-              <tr>
-                <th className="px-6 py-3">Event Features</th>
-                {t.services.map((service, idx) => (
-                  <th key={idx} className="px-6 py-3 text-center">
-                    {service.name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className={theme === 'dark' ? 'bg-[#222] divide-y divide-gray-700' : 'bg-white divide-y divide-gray-200'}>
-                  {t.services[0].features.map((_, i) => (
-                <tr key={i}>
-                  {/* Feature Name */}
-                  <td className={`px-6 py-4 font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
-                        {t.services[0].features[i]}
-                  </td>
-                  {/* Features across services */}
-                  {t.services.map((service, j) => (
-                    <td
-                      key={j}
-                      className={`px-6 py-4 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}
-                    >
-                      {service.features[i] || "—"}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[600px]">
+              {/* Left Column: Myths */}
+              <div className="bg-gradient-to-b from-[#8F00FF] to-[#6c00b8] p-12 flex flex-col justify-center">
+                <h3 className="text-4xl font-bold text-white mb-6">Myths</h3>
+                <p className="text-white text-lg mb-8 leading-relaxed">
+                  Common misconceptions about online shopping.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-white rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-white text-base">{mythsAndFacts[currentMythFact].myth[currentSentenceIndex]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-white rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-white text-base">{mythsAndFacts[currentMythFact].myth[(currentSentenceIndex + 1) % mythsAndFacts[currentMythFact].myth.length]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-white rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-white text-base">{mythsAndFacts[currentMythFact].myth[(currentSentenceIndex + 2) % mythsAndFacts[currentMythFact].myth.length]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-white rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-white text-base">{mythsAndFacts[currentMythFact].myth[(currentSentenceIndex + 3) % mythsAndFacts[currentMythFact].myth.length]}</p>
+                  </div>
+                </div>
+              </div>
 
-
-
-
-  <section className={`py-16 ${theme === 'dark' ? 'bg-[#181818]' : 'bg-[#fff]'}`}>
-    <div className="max-w-6xl mx-auto px-6">
-      {/* Heading */}
-  <h2 className="text-4xl md:text-5xl font-bold text-center mb-12" style={{ color: '#22c55e' }}>
-  <span style={{ color: '#ff0000' }}>{t.mythsTitle}</span>
-      </h2>
-
-      {/* Grid */}
-
-      <div className="grid md:grid-cols-2 gap-10">
-        {t.myths.map((item, idx) => (
-          <div className="space-y-4" key={idx}>
-            <div className="flex gap-2">
-              <h3 className="text-[#ff0000] font-bold">Myth:</h3>
-              <p className={theme === 'dark' ? 'text-white' : 'text-black'}>{item.myth}</p>
+              {/* Right Column: Facts */}
+              <div className="bg-white p-12 flex flex-col justify-center">
+                <h3 className="text-4xl font-bold text-[#8F00FF] mb-6">Facts</h3>
+                <p className="text-[#8F00FF] text-lg mb-8 leading-relaxed">
+                  The reality of safe, smart online shopping.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-[#8F00FF] rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-[#8F00FF] text-base">{mythsAndFacts[currentMythFact].fact[currentSentenceIndex]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-[#8F00FF] rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-[#8F00FF] text-base">{mythsAndFacts[currentMythFact].fact[(currentSentenceIndex + 1) % mythsAndFacts[currentMythFact].fact.length]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-[#8F00FF] rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-[#8F00FF] text-base">{mythsAndFacts[currentMythFact].fact[(currentSentenceIndex + 2) % mythsAndFacts[currentMythFact].fact.length]}</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-3 h-3 bg-[#8F00FF] rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                    <p className="text-[#8F00FF] text-base">{mythsAndFacts[currentMythFact].fact[(currentSentenceIndex + 3) % mythsAndFacts[currentMythFact].fact.length]}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <h3 className="text-[#ff0000] font-bold">Fact:</h3>
-              <p className={theme === 'dark' ? 'text-white' : 'text-black'}>{item.fact}</p>
+        </section>
+
+
+  {/* Section 6 - Ecommerce Quiz */}
+  <section className={`w-full py-16 px-4 ${isDarkMode ? 'bg-black' : 'bg-white'}`}> 
+        <div className="max-w-6xl mx-auto">
+          <h2 className={`text-3xl font-bold text-center mb-12 ${isDarkMode ? 'text-white' : 'text-[#8F00FF]'}`}>
+            2-Minute Ecommerce Quiz
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+            {/* Left Side - Quiz Image */}
+            <div className="flex justify-center lg:justify-start">
+              <div className="relative w-full max-w-xl h-full">
+                <img 
+                  src={quizImage} 
+                  alt="Ecommerce Quiz" 
+                  className="w-full h-full object-cover rounded-xl shadow-lg"
+                />
+              </div>
+            </div>
+
+            {/* Right Side - Quiz Content */}
+            <div className="flex flex-col justify-center">
+              {!showResults ? (
+                <div className={`rounded-xl shadow-lg p-8 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                  {/* Progress Bar */}
+                  <div className="mb-8">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        Question {currentQuestion + 1} of {quizQuestions.length}
+                      </span>
+                      <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        {Math.round(((currentQuestion + 1) / quizQuestions.length) * 100)}%
+                      </span>
+                    </div>
+                    <div className={`w-full h-2 rounded-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+                      <div 
+                        className="h-2 bg-[#8F00FF] rounded-full transition-all duration-300"
+                        style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Question */}
+                  <h3 className={`text-xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+                    {quizQuestions[currentQuestion].question}
+                  </h3>
+
+                  {/* Options */}
+                  <div className="space-y-4 mb-8">
+                    {quizQuestions[currentQuestion].options.map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleAnswerSelect(index)}
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
+                          selectedAnswers[currentQuestion] === index
+                            ? 'border-[#8F00FF] bg-violet-50'
+                            : `${isDarkMode ? 'border-gray-600 hover:border-gray-500' : 'border-gray-200 hover:border-gray-300'}`
+                        } ${getAnswerColor(currentQuestion, index)}`}
+                        disabled={selectedAnswers[currentQuestion] !== undefined}
+                      >
+                        <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+                          {String.fromCharCode(65 + index)}. {option}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Navigation Buttons */}
+                  <div className="flex justify-between items-center">
+                    <button
+                      onClick={handlePrevious}
+                      disabled={currentQuestion === 0}
+                      className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+                        currentQuestion === 0
+                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          : 'bg-[#8F00FF] text-white hover:bg-violet-700'
+                      }`}
+                    >
+                      Previous
+                    </button>
+                    
+                    <button
+                      onClick={handleNext}
+                      className="px-6 py-3 bg-[#8F00FF] text-white rounded-lg font-semibold hover:bg-violet-700 transition-colors"
+                    >
+                      {currentQuestion === quizQuestions.length - 1 ? 'See Results' : 'Next'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Results Section */
+                <div className={`rounded-xl shadow-lg p-8 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                  <h3 className={`text-2xl font-bold text-center mb-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+                    Quiz Results
+                  </h3>
+                  
+                  <div className="text-center mb-8">
+                    <div className={`text-6xl font-bold mb-4 ${isDarkMode ? 'text-[#8F00FF]' : 'text-[#8F00FF]'}`}>
+                      {calculateScore()}/{quizQuestions.length}
+                    </div>
+                    <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {calculateScore() >= 4 ? 'Excellent ecommerce knowledge!' : 'Keep learning and shopping smart!'}
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <button
+                      onClick={() => {
+                        setCurrentQuestion(0);
+                        setSelectedAnswers({});
+                        setShowResults(false);
+                      }}
+                      className="px-6 py-3 bg-[#8F00FF] text-white rounded-lg font-semibold hover:bg-violet-700 transition-colors"
+                    >
+                      Take Quiz Again
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        ))}
-      </div>
-
-    </div>
-  </section>
-
-<div className={`py-10 ${theme === 'dark' ? 'bg-[#000]' : 'bg-[#ff00001a]'}`}>
-  <h2 className={`text-3xl font-bold text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-    {t.tipsTitle}
-  </h2>
-
-  <div className="grid  md:grid-cols-2 gap-6 max-w-4xl mx-auto ">
-    {t.constructionTips.map((item, index) => (
-      <div 
-        key={index} 
-        className="p-4 border border-gray-200 bg-white rounded-xl shadow-sm hover:shadow-md transition"
-      >
-        <p className={theme === 'dark' ? 'text-black' : 'text-black'}>
-          {item.tip}
-        </p>
-      </div>
-    ))}
-  </div>
-</div>
-
+        </div>
+      </section>
+      {/* CTA Section */}
+      <section className="w-full py-16 px-4 bg-gradient-to-r from-[#8F00FF] to-[#6c00b8] flex justify-center items-center">
+        <div className="max-w-3xl mx-auto text-center text-white">
+          <h2 className="text-4xl font-bold mb-4">Ready to Shop Smarter?</h2>
+          <p className="text-lg mb-8">Join Shoply for exclusive deals, shopping tips, and the best online experience.</p>
+          <a href="/contact" className="inline-block px-8 py-4 bg-white text-[#8F00FF] font-bold rounded-lg shadow-lg hover:bg-violet-50 transition-colors text-lg">Contact Us</a>
+        </div>
+      </section>
+      <Footer />
     </div>
   );
 }
+
+export default Blog;
